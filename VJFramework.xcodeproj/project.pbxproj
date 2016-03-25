@@ -7,24 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F65054821CA3EE380079D062 /* VJComboBox.h in Headers */ = {isa = PBXBuildFile; fileRef = F65054801CA3EE380079D062 /* VJComboBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F65054831CA3EE380079D062 /* VJComboBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F65054811CA3EE380079D062 /* VJComboBox.m */; };
-		F65054861CA3EF300079D062 /* VJAutoSuggestionTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = F65054841CA3EF300079D062 /* VJAutoSuggestionTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F65054871CA3EF300079D062 /* VJAutoSuggestionTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F65054851CA3EF300079D062 /* VJAutoSuggestionTextField.m */; };
+		F619331B1CA50B28009C2718 /* UIImage+VJKitExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F61933121CA50B27009C2718 /* UIImage+VJKitExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F619331C1CA50B28009C2718 /* UIImage+VJKitExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F61933131CA50B27009C2718 /* UIImage+VJKitExtension.m */; };
+		F619331D1CA50B28009C2718 /* VJAutoSuggestionTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = F61933151CA50B28009C2718 /* VJAutoSuggestionTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F619331E1CA50B28009C2718 /* VJAutoSuggestionTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F61933161CA50B28009C2718 /* VJAutoSuggestionTextField.m */; };
+		F619331F1CA50B28009C2718 /* VJButton.h in Headers */ = {isa = PBXBuildFile; fileRef = F61933171CA50B28009C2718 /* VJButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F61933201CA50B28009C2718 /* VJButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F61933181CA50B28009C2718 /* VJButton.m */; };
+		F61933211CA50B28009C2718 /* VJComboBox.h in Headers */ = {isa = PBXBuildFile; fileRef = F61933191CA50B28009C2718 /* VJComboBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F61933221CA50B28009C2718 /* VJComboBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F619331A1CA50B28009C2718 /* VJComboBox.m */; };
+		F61933251CA50C06009C2718 /* UIColor+VJKitExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F61933231CA50C06009C2718 /* UIColor+VJKitExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F61933261CA50C06009C2718 /* UIColor+VJKitExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F61933241CA50C06009C2718 /* UIColor+VJKitExtension.m */; };
 		F650548A1CA3F15A0079D062 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F65054891CA3F15A0079D062 /* Images.xcassets */; };
-		F65054931CA46D6D0079D062 /* UIImage+VJKitExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F65054911CA46D6D0079D062 /* UIImage+VJKitExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F65054941CA46D6D0079D062 /* UIImage+VJKitExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F65054921CA46D6D0079D062 /* UIImage+VJKitExtension.m */; };
 		F68FAB941C9FF7CF00BF603E /* VJFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = F68FAB931C9FF7CF00BF603E /* VJFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F65054801CA3EE380079D062 /* VJComboBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VJComboBox.h; sourceTree = "<group>"; };
-		F65054811CA3EE380079D062 /* VJComboBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VJComboBox.m; sourceTree = "<group>"; };
-		F65054841CA3EF300079D062 /* VJAutoSuggestionTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VJAutoSuggestionTextField.h; sourceTree = "<group>"; };
-		F65054851CA3EF300079D062 /* VJAutoSuggestionTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VJAutoSuggestionTextField.m; sourceTree = "<group>"; };
+		F61933121CA50B27009C2718 /* UIImage+VJKitExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+VJKitExtension.h"; sourceTree = "<group>"; };
+		F61933131CA50B27009C2718 /* UIImage+VJKitExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+VJKitExtension.m"; sourceTree = "<group>"; };
+		F61933151CA50B28009C2718 /* VJAutoSuggestionTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VJAutoSuggestionTextField.h; sourceTree = "<group>"; };
+		F61933161CA50B28009C2718 /* VJAutoSuggestionTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VJAutoSuggestionTextField.m; sourceTree = "<group>"; };
+		F61933171CA50B28009C2718 /* VJButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VJButton.h; sourceTree = "<group>"; };
+		F61933181CA50B28009C2718 /* VJButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VJButton.m; sourceTree = "<group>"; };
+		F61933191CA50B28009C2718 /* VJComboBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VJComboBox.h; sourceTree = "<group>"; };
+		F619331A1CA50B28009C2718 /* VJComboBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VJComboBox.m; sourceTree = "<group>"; };
+		F61933231CA50C06009C2718 /* UIColor+VJKitExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+VJKitExtension.h"; sourceTree = "<group>"; };
+		F61933241CA50C06009C2718 /* UIColor+VJKitExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+VJKitExtension.m"; sourceTree = "<group>"; };
 		F65054891CA3F15A0079D062 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		F65054911CA46D6D0079D062 /* UIImage+VJKitExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+VJKitExtension.h"; sourceTree = "<group>"; };
-		F65054921CA46D6D0079D062 /* UIImage+VJKitExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+VJKitExtension.m"; sourceTree = "<group>"; };
 		F65054951CA46ED10079D062 /* VJFramework+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VJFramework+Private.h"; sourceTree = "<group>"; };
 		F68FAB901C9FF7CF00BF603E /* VJFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VJFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F68FAB931C9FF7CF00BF603E /* VJFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VJFramework.h; sourceTree = "<group>"; };
@@ -42,6 +50,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F61933111CA50B27009C2718 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F61933231CA50C06009C2718 /* UIColor+VJKitExtension.h */,
+				F61933241CA50C06009C2718 /* UIColor+VJKitExtension.m */,
+				F61933121CA50B27009C2718 /* UIImage+VJKitExtension.h */,
+				F61933131CA50B27009C2718 /* UIImage+VJKitExtension.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F61933141CA50B28009C2718 /* Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				F61933151CA50B28009C2718 /* VJAutoSuggestionTextField.h */,
+				F61933161CA50B28009C2718 /* VJAutoSuggestionTextField.m */,
+				F61933171CA50B28009C2718 /* VJButton.h */,
+				F61933181CA50B28009C2718 /* VJButton.m */,
+				F61933191CA50B28009C2718 /* VJComboBox.h */,
+				F619331A1CA50B28009C2718 /* VJComboBox.m */,
+			);
+			path = Subclasses;
+			sourceTree = "<group>";
+		};
 		F650547E1CA3E8220079D062 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -53,12 +85,8 @@
 		F650547F1CA3EE380079D062 /* VJKit */ = {
 			isa = PBXGroup;
 			children = (
-				F65054841CA3EF300079D062 /* VJAutoSuggestionTextField.h */,
-				F65054851CA3EF300079D062 /* VJAutoSuggestionTextField.m */,
-				F65054801CA3EE380079D062 /* VJComboBox.h */,
-				F65054811CA3EE380079D062 /* VJComboBox.m */,
-				F65054911CA46D6D0079D062 /* UIImage+VJKitExtension.h */,
-				F65054921CA46D6D0079D062 /* UIImage+VJKitExtension.m */,
+				F61933111CA50B27009C2718 /* Extensions */,
+				F61933141CA50B28009C2718 /* Subclasses */,
 			);
 			path = VJKit;
 			sourceTree = "<group>";
@@ -106,10 +134,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F65054861CA3EF300079D062 /* VJAutoSuggestionTextField.h in Headers */,
+				F619331F1CA50B28009C2718 /* VJButton.h in Headers */,
+				F619331D1CA50B28009C2718 /* VJAutoSuggestionTextField.h in Headers */,
+				F61933211CA50B28009C2718 /* VJComboBox.h in Headers */,
+				F619331B1CA50B28009C2718 /* UIImage+VJKitExtension.h in Headers */,
+				F61933251CA50C06009C2718 /* UIColor+VJKitExtension.h in Headers */,
 				F68FAB941C9FF7CF00BF603E /* VJFramework.h in Headers */,
-				F65054931CA46D6D0079D062 /* UIImage+VJKitExtension.h in Headers */,
-				F65054821CA3EE380079D062 /* VJComboBox.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,9 +212,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F65054871CA3EF300079D062 /* VJAutoSuggestionTextField.m in Sources */,
-				F65054831CA3EE380079D062 /* VJComboBox.m in Sources */,
-				F65054941CA46D6D0079D062 /* UIImage+VJKitExtension.m in Sources */,
+				F61933221CA50B28009C2718 /* VJComboBox.m in Sources */,
+				F619331E1CA50B28009C2718 /* VJAutoSuggestionTextField.m in Sources */,
+				F619331C1CA50B28009C2718 /* UIImage+VJKitExtension.m in Sources */,
+				F61933201CA50B28009C2718 /* VJButton.m in Sources */,
+				F61933261CA50C06009C2718 /* UIColor+VJKitExtension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

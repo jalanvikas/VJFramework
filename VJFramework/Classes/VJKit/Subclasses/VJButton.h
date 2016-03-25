@@ -1,13 +1,13 @@
 //
-//  VJFramework.h
+//  VJButton.h
 //  VJFramework
 //
-//  Created by Vikas Jalan on 3/21/16.
-//  Copyright © 2016 http://www.vikasjalan.com All rights reserved.
+//  Created by Vikas Jalan on 3/24/16.
+//  Copyright 2016 http://www.vikasjalan.com All rights reserved.
 //  Contact on jalanvikas@gmail.com or contact@vikasjalan.com
 //
 //  Get the latest version from here:
-//  https://github.com/jalanvikas/ComboBox
+//  https://github.com/jalanvikas/VJFramework
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are
@@ -34,21 +34,24 @@
 //  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 //  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for VJFramework.
-FOUNDATION_EXPORT double VJFrameworkVersionNumber;
+@interface VJButton : UIButton
 
-//! Project version string for VJFramework.
-FOUNDATION_EXPORT const unsigned char VJFrameworkVersionString[];
+#pragma mark - Underline Related Methods
 
-// In this header, you should import all the public headers of your framework using statements like #import <VJFramework/PublicHeader.h>
+- (void)showUnderlineWithColor:(UIColor *)color selectedColor:(UIColor *)selectedColor height:(CGFloat)height;
 
+- (void)hideUnderline;
 
-#import "VJAutoSuggestionTextField.h"
-#import "VJComboBox.h"
-#import "VJButton.h"
+#pragma mark - Content Alignment Related
 
-#import "UIColor+VJKitExtension.h"
-#import "UIImage+VJKitExtension.h"
+- (void)alignTextAndImageVertically:(BOOL)vertical;             // Default NO
+
+- (void)verticalOffsetBetweenTextAndImage:(CGFloat)offset;      // Default 5.0f
+
+- (void)alignImageOnTop:(BOOL)imageOnTop;                       // Default YES
+
+@end
