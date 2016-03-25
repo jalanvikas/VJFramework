@@ -1,5 +1,5 @@
 //
-//  UIImage+UIImage_VJKitExtension.h
+//  UIImage+VJKitExtension.h
 //  VJFramework
 //
 //  Created by Vikas Jalan on 3/25/16.

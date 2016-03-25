@@ -1,5 +1,5 @@
 //
-//  UIColor+UIImage_VJKitExtension.h
+//  UIColor+VJKitExtension.h
 //  VJFramework
 //
 //  Created by Vikas Jalan on 3/25/16.

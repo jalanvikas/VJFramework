@@ -17,6 +17,8 @@
 		F61933221CA50B28009C2718 /* VJComboBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F619331A1CA50B28009C2718 /* VJComboBox.m */; };
 		F61933251CA50C06009C2718 /* UIColor+VJKitExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F61933231CA50C06009C2718 /* UIColor+VJKitExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F61933261CA50C06009C2718 /* UIColor+VJKitExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F61933241CA50C06009C2718 /* UIColor+VJKitExtension.m */; };
+		F62FA09A1CA53273005F3639 /* NSString+VJFoundationExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F62FA0981CA53273005F3639 /* NSString+VJFoundationExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F62FA09B1CA53273005F3639 /* NSString+VJFoundationExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F62FA0991CA53273005F3639 /* NSString+VJFoundationExtension.m */; };
 		F650548A1CA3F15A0079D062 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F65054891CA3F15A0079D062 /* Images.xcassets */; };
 		F68FAB941C9FF7CF00BF603E /* VJFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = F68FAB931C9FF7CF00BF603E /* VJFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -32,6 +34,8 @@
 		F619331A1CA50B28009C2718 /* VJComboBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VJComboBox.m; sourceTree = "<group>"; };
 		F61933231CA50C06009C2718 /* UIColor+VJKitExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+VJKitExtension.h"; sourceTree = "<group>"; };
 		F61933241CA50C06009C2718 /* UIColor+VJKitExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+VJKitExtension.m"; sourceTree = "<group>"; };
+		F62FA0981CA53273005F3639 /* NSString+VJFoundationExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+VJFoundationExtension.h"; sourceTree = "<group>"; };
+		F62FA0991CA53273005F3639 /* NSString+VJFoundationExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+VJFoundationExtension.m"; sourceTree = "<group>"; };
 		F65054891CA3F15A0079D062 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F65054951CA46ED10079D062 /* VJFramework+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VJFramework+Private.h"; sourceTree = "<group>"; };
 		F68FAB901C9FF7CF00BF603E /* VJFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VJFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,9 +78,27 @@
 			path = Subclasses;
 			sourceTree = "<group>";
 		};
+		F62FA0961CA5323F005F3639 /* VJFoundation */ = {
+			isa = PBXGroup;
+			children = (
+				F62FA0971CA5323F005F3639 /* Extensions */,
+			);
+			path = VJFoundation;
+			sourceTree = "<group>";
+		};
+		F62FA0971CA5323F005F3639 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F62FA0981CA53273005F3639 /* NSString+VJFoundationExtension.h */,
+				F62FA0991CA53273005F3639 /* NSString+VJFoundationExtension.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		F650547E1CA3E8220079D062 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F62FA0961CA5323F005F3639 /* VJFoundation */,
 				F650547F1CA3EE380079D062 /* VJKit */,
 			);
 			path = Classes;
@@ -139,6 +161,7 @@
 				F61933211CA50B28009C2718 /* VJComboBox.h in Headers */,
 				F619331B1CA50B28009C2718 /* UIImage+VJKitExtension.h in Headers */,
 				F61933251CA50C06009C2718 /* UIColor+VJKitExtension.h in Headers */,
+				F62FA09A1CA53273005F3639 /* NSString+VJFoundationExtension.h in Headers */,
 				F68FAB941C9FF7CF00BF603E /* VJFramework.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,6 +237,7 @@
 			files = (
 				F61933221CA50B28009C2718 /* VJComboBox.m in Sources */,
 				F619331E1CA50B28009C2718 /* VJAutoSuggestionTextField.m in Sources */,
+				F62FA09B1CA53273005F3639 /* NSString+VJFoundationExtension.m in Sources */,
 				F619331C1CA50B28009C2718 /* UIImage+VJKitExtension.m in Sources */,
 				F61933201CA50B28009C2718 /* VJButton.m in Sources */,
 				F61933261CA50C06009C2718 /* UIColor+VJKitExtension.m in Sources */,
