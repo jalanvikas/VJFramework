@@ -52,4 +52,5 @@ FOUNDATION_EXPORT const unsigned char VJFrameworkVersionString[];
 
 #import "UIColor+VJKitExtension.h"
 #import "UIImage+VJKitExtension.h"
+#import "UIView+VJKitExtension.h"
 #import "NSString+VJFoundationExtension.h"

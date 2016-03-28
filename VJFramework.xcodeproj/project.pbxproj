@@ -20,6 +20,8 @@
 		F62FA09A1CA53273005F3639 /* NSString+VJFoundationExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F62FA0981CA53273005F3639 /* NSString+VJFoundationExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F62FA09B1CA53273005F3639 /* NSString+VJFoundationExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F62FA0991CA53273005F3639 /* NSString+VJFoundationExtension.m */; };
 		F650548A1CA3F15A0079D062 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F65054891CA3F15A0079D062 /* Images.xcassets */; };
+		F65C0AE11CA7C34100F6B685 /* UIView+VJKitExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F65C0ADF1CA7C34100F6B685 /* UIView+VJKitExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F65C0AE21CA7C34100F6B685 /* UIView+VJKitExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F65C0AE01CA7C34100F6B685 /* UIView+VJKitExtension.m */; };
 		F68FAB941C9FF7CF00BF603E /* VJFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = F68FAB931C9FF7CF00BF603E /* VJFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -38,6 +40,8 @@
 		F62FA0991CA53273005F3639 /* NSString+VJFoundationExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+VJFoundationExtension.m"; sourceTree = "<group>"; };
 		F65054891CA3F15A0079D062 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F65054951CA46ED10079D062 /* VJFramework+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VJFramework+Private.h"; sourceTree = "<group>"; };
+		F65C0ADF1CA7C34100F6B685 /* UIView+VJKitExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+VJKitExtension.h"; sourceTree = "<group>"; };
+		F65C0AE01CA7C34100F6B685 /* UIView+VJKitExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+VJKitExtension.m"; sourceTree = "<group>"; };
 		F68FAB901C9FF7CF00BF603E /* VJFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VJFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F68FAB931C9FF7CF00BF603E /* VJFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VJFramework.h; sourceTree = "<group>"; };
 		F68FAB951C9FF7CF00BF603E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -57,6 +61,8 @@
 		F61933111CA50B27009C2718 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				F65C0ADF1CA7C34100F6B685 /* UIView+VJKitExtension.h */,
+				F65C0AE01CA7C34100F6B685 /* UIView+VJKitExtension.m */,
 				F61933231CA50C06009C2718 /* UIColor+VJKitExtension.h */,
 				F61933241CA50C06009C2718 /* UIColor+VJKitExtension.m */,
 				F61933121CA50B27009C2718 /* UIImage+VJKitExtension.h */,
@@ -162,6 +168,7 @@
 				F619331B1CA50B28009C2718 /* UIImage+VJKitExtension.h in Headers */,
 				F61933251CA50C06009C2718 /* UIColor+VJKitExtension.h in Headers */,
 				F62FA09A1CA53273005F3639 /* NSString+VJFoundationExtension.h in Headers */,
+				F65C0AE11CA7C34100F6B685 /* UIView+VJKitExtension.h in Headers */,
 				F68FAB941C9FF7CF00BF603E /* VJFramework.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,6 +244,7 @@
 			files = (
 				F61933221CA50B28009C2718 /* VJComboBox.m in Sources */,
 				F619331E1CA50B28009C2718 /* VJAutoSuggestionTextField.m in Sources */,
+				F65C0AE21CA7C34100F6B685 /* UIView+VJKitExtension.m in Sources */,
 				F62FA09B1CA53273005F3639 /* NSString+VJFoundationExtension.m in Sources */,
 				F619331C1CA50B28009C2718 /* UIImage+VJKitExtension.m in Sources */,
 				F61933201CA50B28009C2718 /* VJButton.m in Sources */,
