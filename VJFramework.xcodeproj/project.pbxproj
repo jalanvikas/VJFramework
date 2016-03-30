@@ -22,6 +22,11 @@
 		F650548A1CA3F15A0079D062 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F65054891CA3F15A0079D062 /* Images.xcassets */; };
 		F65C0AE11CA7C34100F6B685 /* UIView+VJKitExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F65C0ADF1CA7C34100F6B685 /* UIView+VJKitExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F65C0AE21CA7C34100F6B685 /* UIView+VJKitExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F65C0AE01CA7C34100F6B685 /* UIView+VJKitExtension.m */; };
+		F66415BD1CAC062D00F9AD85 /* VJAlertsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F66415B81CAC062D00F9AD85 /* VJAlertsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F66415BE1CAC062D00F9AD85 /* VJAlertsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F66415B91CAC062D00F9AD85 /* VJAlertsManager.m */; };
+		F66415BF1CAC062D00F9AD85 /* VJAlertViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F66415BA1CAC062D00F9AD85 /* VJAlertViewController.h */; };
+		F66415C01CAC062D00F9AD85 /* VJAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F66415BB1CAC062D00F9AD85 /* VJAlertViewController.m */; };
+		F66415C11CAC062D00F9AD85 /* VJAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66415BC1CAC062D00F9AD85 /* VJAlertViewController.xib */; };
 		F68FAB941C9FF7CF00BF603E /* VJFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = F68FAB931C9FF7CF00BF603E /* VJFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -42,6 +47,11 @@
 		F65054951CA46ED10079D062 /* VJFramework+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VJFramework+Private.h"; sourceTree = "<group>"; };
 		F65C0ADF1CA7C34100F6B685 /* UIView+VJKitExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+VJKitExtension.h"; sourceTree = "<group>"; };
 		F65C0AE01CA7C34100F6B685 /* UIView+VJKitExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+VJKitExtension.m"; sourceTree = "<group>"; };
+		F66415B81CAC062D00F9AD85 /* VJAlertsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VJAlertsManager.h; sourceTree = "<group>"; };
+		F66415B91CAC062D00F9AD85 /* VJAlertsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VJAlertsManager.m; sourceTree = "<group>"; };
+		F66415BA1CAC062D00F9AD85 /* VJAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VJAlertViewController.h; sourceTree = "<group>"; };
+		F66415BB1CAC062D00F9AD85 /* VJAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VJAlertViewController.m; sourceTree = "<group>"; };
+		F66415BC1CAC062D00F9AD85 /* VJAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VJAlertViewController.xib; sourceTree = "<group>"; };
 		F68FAB901C9FF7CF00BF603E /* VJFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VJFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F68FAB931C9FF7CF00BF603E /* VJFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VJFramework.h; sourceTree = "<group>"; };
 		F68FAB951C9FF7CF00BF603E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -104,6 +114,7 @@
 		F650547E1CA3E8220079D062 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F66415B71CAC062D00F9AD85 /* VJAlertsManager */,
 				F62FA0961CA5323F005F3639 /* VJFoundation */,
 				F650547F1CA3EE380079D062 /* VJKit */,
 			);
@@ -125,6 +136,18 @@
 				F65054891CA3F15A0079D062 /* Images.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		F66415B71CAC062D00F9AD85 /* VJAlertsManager */ = {
+			isa = PBXGroup;
+			children = (
+				F66415B81CAC062D00F9AD85 /* VJAlertsManager.h */,
+				F66415B91CAC062D00F9AD85 /* VJAlertsManager.m */,
+				F66415BA1CAC062D00F9AD85 /* VJAlertViewController.h */,
+				F66415BB1CAC062D00F9AD85 /* VJAlertViewController.m */,
+				F66415BC1CAC062D00F9AD85 /* VJAlertViewController.xib */,
+			);
+			path = VJAlertsManager;
 			sourceTree = "<group>";
 		};
 		F68FAB861C9FF7CF00BF603E = {
@@ -168,6 +191,8 @@
 				F619331B1CA50B28009C2718 /* UIImage+VJKitExtension.h in Headers */,
 				F61933251CA50C06009C2718 /* UIColor+VJKitExtension.h in Headers */,
 				F62FA09A1CA53273005F3639 /* NSString+VJFoundationExtension.h in Headers */,
+				F66415BF1CAC062D00F9AD85 /* VJAlertViewController.h in Headers */,
+				F66415BD1CAC062D00F9AD85 /* VJAlertsManager.h in Headers */,
 				F65C0AE11CA7C34100F6B685 /* UIView+VJKitExtension.h in Headers */,
 				F68FAB941C9FF7CF00BF603E /* VJFramework.h in Headers */,
 			);
@@ -232,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F650548A1CA3F15A0079D062 /* Images.xcassets in Resources */,
+				F66415C11CAC062D00F9AD85 /* VJAlertViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,8 +270,10 @@
 			files = (
 				F61933221CA50B28009C2718 /* VJComboBox.m in Sources */,
 				F619331E1CA50B28009C2718 /* VJAutoSuggestionTextField.m in Sources */,
+				F66415BE1CAC062D00F9AD85 /* VJAlertsManager.m in Sources */,
 				F65C0AE21CA7C34100F6B685 /* UIView+VJKitExtension.m in Sources */,
 				F62FA09B1CA53273005F3639 /* NSString+VJFoundationExtension.m in Sources */,
+				F66415C01CAC062D00F9AD85 /* VJAlertViewController.m in Sources */,
 				F619331C1CA50B28009C2718 /* UIImage+VJKitExtension.m in Sources */,
 				F61933201CA50B28009C2718 /* VJButton.m in Sources */,
 				F61933261CA50C06009C2718 /* UIColor+VJKitExtension.m in Sources */,

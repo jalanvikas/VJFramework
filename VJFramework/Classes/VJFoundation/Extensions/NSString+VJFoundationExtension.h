@@ -32,10 +32,13 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
 @interface NSString (VJFoundationExtension)
 
 - (NSString *)localizedString;
+
+- (CGSize)getSizeForWidth:(CGFloat)width withFont:(UIFont *)font numberOfLines:(NSInteger *)lines;
 
 @end

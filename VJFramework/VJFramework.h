@@ -54,3 +54,5 @@ FOUNDATION_EXPORT const unsigned char VJFrameworkVersionString[];
 #import "UIImage+VJKitExtension.h"
 #import "UIView+VJKitExtension.h"
 #import "NSString+VJFoundationExtension.h"
+
+#import "VJAlertsManager.h"

@@ -1,13 +1,17 @@
 //
-//  NSString+VJFoundationExtension.m
+//  VJAlertsManager.h
 //  VJFramework
 //
-//  Created by Vikas Jalan on 3/25/16.
+//  Created by Vikas Jalan on 28/03/16.
 //  Copyright 2016 http://www.vikasjalan.com All rights reserved.
 //  Contact on jalanvikas@gmail.com or contact@vikasjalan.com
 //
 //  Get the latest version from here:
 //  https://github.com/jalanvikas/VJFramework
+//
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are
+//  met:
 //
 //  * Redistributions of source code must retain the above copyright notice,
 //  this list of conditions and the following disclaimer.
@@ -32,29 +36,16 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "NSString+VJFoundationExtension.h"
+#import <Foundation/Foundation.h>
 
-@implementation NSString (VJFoundationExtension)
+@interface VJAlertsManager : NSObject
 
-- (NSString *)localizedString
-{
-    return NSLocalizedString(self, self);
-}
+#pragma mark - Singleton Method
 
-- (CGSize)getSizeForWidth:(CGFloat)width withFont:(UIFont *)font numberOfLines:(NSInteger *)lines
-{
-    NSDictionary *attributes = @{NSFontAttributeName:font};
-    
-    CGSize textSize = [self sizeWithAttributes:attributes];
-    CGRect textRectForWidth = [self boundingRectWithSize:CGSizeMake(width, 9999)
-                                                 options:NSStringDrawingUsesLineFragmentOrigin
-                                              attributes:attributes
-                                                 context:nil];
-    
-    NSInteger noOfLines = ceil(textRectForWidth.size.height / textSize.height);
-    *lines = noOfLines;
-    
-    return textRectForWidth.size;
-}
++ (VJAlertsManager *)sharedInstance;
+
+#pragma mark - Custom Method
+
+- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles completion:(void (^)(BOOL isCancelButton, NSInteger buttonIndex))completion;
 
 @end
