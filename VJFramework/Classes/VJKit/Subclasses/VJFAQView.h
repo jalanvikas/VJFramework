@@ -1,13 +1,13 @@
 //
-//  VJFramework.h
+//  VJFAQView.h
 //  VJFramework
 //
-//  Created by Vikas Jalan on 3/21/16.
-//  Copyright © 2016 http://www.vikasjalan.com All rights reserved.
+//  Created by Vikas Jalan on 4/09/16.
+//  Copyright 2016 http://www.vikasjalan.com All rights reserved.
 //  Contact on jalanvikas@gmail.com or contact@vikasjalan.com
 //
 //  Get the latest version from here:
-//  https://github.com/jalanvikas/ComboBox
+//  https://github.com/jalanvikas/VJFramework
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are
@@ -37,23 +37,14 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for VJFramework.
-FOUNDATION_EXPORT double VJFrameworkVersionNumber;
+@interface VJFAQView : UIView
 
-//! Project version string for VJFramework.
-FOUNDATION_EXPORT const unsigned char VJFrameworkVersionString[];
+#pragma mark - Custom Methods
 
-// In this header, you should import all the public headers of your framework using statements like #import <VJFramework/PublicHeader.h>
+- (BOOL)canGoBack;
 
+- (void)goBack;
 
-#import "VJAutoSuggestionTextField.h"
-#import "VJComboBox.h"
-#import "VJButton.h"
-#import "VJFAQView.h"
+- (void)initializeWithFAQInfo:(id)faqInfo;
 
-#import "UIColor+VJKitExtension.h"
-#import "UIImage+VJKitExtension.h"
-#import "UIView+VJKitExtension.h"
-#import "NSString+VJFoundationExtension.h"
-
-#import "VJAlertsManager.h"
+@end

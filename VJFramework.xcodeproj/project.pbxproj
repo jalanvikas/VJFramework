@@ -17,6 +17,8 @@
 		F61933221CA50B28009C2718 /* VJComboBox.m in Sources */ = {isa = PBXBuildFile; fileRef = F619331A1CA50B28009C2718 /* VJComboBox.m */; };
 		F61933251CA50C06009C2718 /* UIColor+VJKitExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F61933231CA50C06009C2718 /* UIColor+VJKitExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F61933261CA50C06009C2718 /* UIColor+VJKitExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F61933241CA50C06009C2718 /* UIColor+VJKitExtension.m */; };
+		F62CDA151CBA95F4009FC4EA /* VJFAQView.h in Headers */ = {isa = PBXBuildFile; fileRef = F62CDA131CBA95F4009FC4EA /* VJFAQView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F62CDA161CBA95F4009FC4EA /* VJFAQView.m in Sources */ = {isa = PBXBuildFile; fileRef = F62CDA141CBA95F4009FC4EA /* VJFAQView.m */; };
 		F62FA09A1CA53273005F3639 /* NSString+VJFoundationExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F62FA0981CA53273005F3639 /* NSString+VJFoundationExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F62FA09B1CA53273005F3639 /* NSString+VJFoundationExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F62FA0991CA53273005F3639 /* NSString+VJFoundationExtension.m */; };
 		F650548A1CA3F15A0079D062 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F65054891CA3F15A0079D062 /* Images.xcassets */; };
@@ -41,6 +43,8 @@
 		F619331A1CA50B28009C2718 /* VJComboBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VJComboBox.m; sourceTree = "<group>"; };
 		F61933231CA50C06009C2718 /* UIColor+VJKitExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+VJKitExtension.h"; sourceTree = "<group>"; };
 		F61933241CA50C06009C2718 /* UIColor+VJKitExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+VJKitExtension.m"; sourceTree = "<group>"; };
+		F62CDA131CBA95F4009FC4EA /* VJFAQView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VJFAQView.h; sourceTree = "<group>"; };
+		F62CDA141CBA95F4009FC4EA /* VJFAQView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VJFAQView.m; sourceTree = "<group>"; };
 		F62FA0981CA53273005F3639 /* NSString+VJFoundationExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+VJFoundationExtension.h"; sourceTree = "<group>"; };
 		F62FA0991CA53273005F3639 /* NSString+VJFoundationExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+VJFoundationExtension.m"; sourceTree = "<group>"; };
 		F65054891CA3F15A0079D062 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -90,6 +94,8 @@
 				F61933181CA50B28009C2718 /* VJButton.m */,
 				F61933191CA50B28009C2718 /* VJComboBox.h */,
 				F619331A1CA50B28009C2718 /* VJComboBox.m */,
+				F62CDA131CBA95F4009FC4EA /* VJFAQView.h */,
+				F62CDA141CBA95F4009FC4EA /* VJFAQView.m */,
 			);
 			path = Subclasses;
 			sourceTree = "<group>";
@@ -193,6 +199,7 @@
 				F62FA09A1CA53273005F3639 /* NSString+VJFoundationExtension.h in Headers */,
 				F66415BF1CAC062D00F9AD85 /* VJAlertViewController.h in Headers */,
 				F66415BD1CAC062D00F9AD85 /* VJAlertsManager.h in Headers */,
+				F62CDA151CBA95F4009FC4EA /* VJFAQView.h in Headers */,
 				F65C0AE11CA7C34100F6B685 /* UIView+VJKitExtension.h in Headers */,
 				F68FAB941C9FF7CF00BF603E /* VJFramework.h in Headers */,
 			);
@@ -275,6 +282,7 @@
 				F62FA09B1CA53273005F3639 /* NSString+VJFoundationExtension.m in Sources */,
 				F66415C01CAC062D00F9AD85 /* VJAlertViewController.m in Sources */,
 				F619331C1CA50B28009C2718 /* UIImage+VJKitExtension.m in Sources */,
+				F62CDA161CBA95F4009FC4EA /* VJFAQView.m in Sources */,
 				F61933201CA50B28009C2718 /* VJButton.m in Sources */,
 				F61933261CA50C06009C2718 /* UIColor+VJKitExtension.m in Sources */,
 			);
