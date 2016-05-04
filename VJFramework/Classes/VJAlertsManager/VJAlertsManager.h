@@ -37,12 +37,27 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface VJAlertsManager : NSObject
 
 #pragma mark - Singleton Method
 
 + (VJAlertsManager *)sharedInstance;
+
+#pragma mark - Formatting Method
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor;
+
+- (void)setBackgroundImage:(UIImage *)backgroundImage;
+
+- (void)setContentBackgroundColor:(UIColor *)contentBackgroundColor;
+
+- (void)setContentAlignment:(NSTextAlignment)contentAlignment;          // Default NSTextAlignmentCenter.
+
+- (void)setHeaderAlignment:(NSTextAlignment)headerAlignment;            // Default NSTextAlignmentCenter.
+
+- (void)setButtonsColor:(UIColor *)buttonsColor;
 
 #pragma mark - Custom Method
 

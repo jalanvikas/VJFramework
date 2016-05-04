@@ -38,6 +38,7 @@
 
 #import "VJFAQView.h"
 #import "UIColor+VJKitExtension.h"
+#import "NSString+VJFoundationExtension.h"
 
 
 #define FAQ_ITEM_HEADING_KEY        @"heading"
@@ -51,136 +52,6 @@
 
 #define LIST_TABLE_VIEW_CELL_HEIGHT                     35.0f
 #define LIST_TABLE_VIEW_CELL_SEPARATOR_HEIGHT           0.5f
-
-#define DEFAULT_ATTRIBUTE_STRING_COLOR                  @"000000"
-#define DEFAULT_ATTRIBUTE_FONT_SIZE                     15.0f
-#define DEFAULT_ATTRIBUTE_FONT_BOLD                     0
-
-@interface VJFAQViewUtilities : NSObject
-
-+ (NSDictionary *)attributeWithString:(NSString *)attribute;
-
-+ (NSAttributedString *)attributedString:(NSString *)string;
-
-@end
-
-
-@implementation VJFAQViewUtilities
-
-+ (NSDictionary *)attributeWithString:(NSString *)attribute
-{
-    CGFloat fontSize = DEFAULT_ATTRIBUTE_FONT_SIZE;
-    BOOL bold = DEFAULT_ATTRIBUTE_FONT_BOLD;
-    NSString *color = DEFAULT_ATTRIBUTE_STRING_COLOR;
-    
-    NSRange sizeRange = [attribute rangeOfString:@"size" options:NSCaseInsensitiveSearch];
-    if (NSNotFound != sizeRange.location)
-    {
-        NSRange startQuoteRange = [attribute rangeOfString:@"\"" options:NSCaseInsensitiveSearch range:NSMakeRange((sizeRange.location + sizeRange.length), ([attribute length] - (sizeRange.location + sizeRange.length)))];
-        if (NSNotFound != startQuoteRange.length)
-        {
-            NSRange endQuoteRange = [attribute rangeOfString:@"\"" options:NSCaseInsensitiveSearch range:NSMakeRange((startQuoteRange.location + startQuoteRange.length), ([attribute length] - (startQuoteRange.location + startQuoteRange.length)))];
-            if (NSNotFound != endQuoteRange.length)
-            {
-                NSString *fontSizeString = [attribute substringWithRange:NSMakeRange((startQuoteRange.location + startQuoteRange.length), (endQuoteRange.location - (startQuoteRange.location + startQuoteRange.length)))];
-                fontSize = [fontSizeString floatValue];
-            }
-        }
-    }
-    
-    NSRange boldRange = [attribute rangeOfString:@"bold" options:NSCaseInsensitiveSearch];
-    if (NSNotFound != boldRange.location)
-    {
-        NSRange startQuoteRange = [attribute rangeOfString:@"\"" options:NSCaseInsensitiveSearch range:NSMakeRange((boldRange.location + boldRange.length), ([attribute length] - (boldRange.location + boldRange.length)))];
-        if (NSNotFound != startQuoteRange.length)
-        {
-            NSRange endQuoteRange = [attribute rangeOfString:@"\"" options:NSCaseInsensitiveSearch range:NSMakeRange((startQuoteRange.location + startQuoteRange.length), ([attribute length] - (startQuoteRange.location + startQuoteRange.length)))];
-            if (NSNotFound != endQuoteRange.length)
-            {
-                NSString *boldString = [attribute substringWithRange:NSMakeRange((startQuoteRange.location + startQuoteRange.length), (endQuoteRange.location - (startQuoteRange.location + startQuoteRange.length)))];
-                bold = [boldString boolValue];
-            }
-        }
-    }
-    
-    NSRange colorRange = [attribute rangeOfString:@"color" options:NSCaseInsensitiveSearch];
-    if (NSNotFound != colorRange.location)
-    {
-        NSRange startQuoteRange = [attribute rangeOfString:@"\"" options:NSCaseInsensitiveSearch range:NSMakeRange((colorRange.location + colorRange.length), ([attribute length] - (colorRange.location + colorRange.length)))];
-        if (NSNotFound != startQuoteRange.length)
-        {
-            NSRange endQuoteRange = [attribute rangeOfString:@"\"" options:NSCaseInsensitiveSearch range:NSMakeRange((startQuoteRange.location + startQuoteRange.length), ([attribute length] - (startQuoteRange.location + startQuoteRange.length)))];
-            if (NSNotFound != endQuoteRange.length)
-            {
-                NSString *colorString = [attribute substringWithRange:NSMakeRange((startQuoteRange.location + startQuoteRange.length), (endQuoteRange.location - (startQuoteRange.location + startQuoteRange.length)))];
-                color = colorString;
-            }
-        }
-    }
-    
-    NSMutableDictionary *stringAttribute = [NSMutableDictionary dictionary];
-    [stringAttribute setObject:(bold?[UIFont boldSystemFontOfSize:fontSize]:[UIFont systemFontOfSize:fontSize]) forKey:NSFontAttributeName];
-    [stringAttribute setObject:[UIColor colorFromHexString:color] forKey:NSForegroundColorAttributeName];
-    
-    return stringAttribute;
-}
-
-+ (NSAttributedString *)attributedString:(NSString *)string
-{
-    NSMutableDictionary *defaultAttributes = [NSMutableDictionary dictionary];
-    [defaultAttributes setObject:[UIFont systemFontOfSize:DEFAULT_ATTRIBUTE_FONT_SIZE] forKey:NSFontAttributeName];
-    [defaultAttributes setObject:[UIColor colorFromHexString:DEFAULT_ATTRIBUTE_STRING_COLOR] forKey:NSForegroundColorAttributeName];
-    
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] init];
-    NSRange stringRange = NSMakeRange(0, [string length]);
-    while (NSNotFound != stringRange.location)
-    {
-        NSRange attributeRange = [string rangeOfString:@"<attribute" options:NSCaseInsensitiveSearch range:stringRange];
-        if (NSNotFound != attributeRange.location)
-        {
-            NSRange closeAttributeRange = [string rangeOfString:@">" options:NSCaseInsensitiveSearch range:stringRange];
-            NSRange endAttributeRange = [string rangeOfString:@"</attribute>" options:NSCaseInsensitiveSearch range:stringRange];
-            if ((NSNotFound != closeAttributeRange.location) && (NSNotFound != endAttributeRange.location))
-            {
-                if (attributeRange.location > stringRange.location)
-                {
-                    NSRange subStringRange = NSMakeRange(stringRange.location, (attributeRange.location - stringRange.location));
-                    NSAttributedString *subString = [[NSAttributedString alloc] initWithString:[string substringWithRange:subStringRange] attributes:defaultAttributes];
-                    [attributedString appendAttributedString:subString];
-                }
-                
-                NSRange subStringAttributeRange = NSMakeRange(attributeRange.location, ((closeAttributeRange.location + closeAttributeRange.length) - attributeRange.location));
-                NSRange attributedSubStringRange = NSMakeRange((closeAttributeRange.location + closeAttributeRange.length), (endAttributeRange.location - (closeAttributeRange.location + closeAttributeRange.length)));
-                NSAttributedString *attributedSubString = [[NSAttributedString alloc] initWithString:[string substringWithRange:attributedSubStringRange] attributes:[VJFAQViewUtilities attributeWithString:[string substringWithRange:subStringAttributeRange]]];
-                [attributedString appendAttributedString:attributedSubString];
-            }
-            
-            if (NSNotFound != endAttributeRange.location)
-            {
-                stringRange.location = (endAttributeRange.location + endAttributeRange.length);
-                stringRange.length = ([string length] - stringRange.location);
-                if (stringRange.location == [string length])
-                {
-                    stringRange.location = NSNotFound;
-                }
-            }
-            else
-            {
-                stringRange.location = NSNotFound;
-            }
-        }
-        else
-        {
-            NSAttributedString *subString = [[NSAttributedString alloc] initWithString:[string substringWithRange:stringRange] attributes:defaultAttributes];
-            [attributedString appendAttributedString:subString];
-            stringRange.location = NSNotFound;
-        }
-    }
-    
-    return attributedString;
-}
-
-@end
 
 
 @class VJFAQListView;
@@ -247,7 +118,7 @@
         [self initialize];
         self.faqInfo = faqInfo;
         
-        self.headingLabel.attributedText = [VJFAQViewUtilities attributedString:[self.faqInfo objectForKey:FAQ_ITEM_HEADING_KEY]];
+        self.headingLabel.attributedText = [[self.faqInfo objectForKey:FAQ_ITEM_HEADING_KEY] attributedString];
         
         self.listTableView.delegate = self;
         self.listTableView.dataSource = self;
@@ -283,7 +154,7 @@
     NSDictionary *cellInfo = [[self.faqInfo objectForKey:FAQ_ITEM_VALUE_KEY] objectAtIndex:indexPath.row];
     if ([[cellInfo objectForKey:FAQ_ITEM_TITLE_KEY] isKindOfClass:[NSString class]])
     {
-        cell.textLabel.attributedText = [VJFAQViewUtilities attributedString:[cellInfo objectForKey:FAQ_ITEM_TITLE_KEY]];
+        cell.textLabel.attributedText = [[cellInfo objectForKey:FAQ_ITEM_TITLE_KEY] attributedString];
     }
     if ([[cellInfo objectForKey:FAQ_ITEM_IMAGE_KEY] isKindOfClass:[NSString class]])
     {
@@ -366,11 +237,11 @@
         self.faqInfo = faqInfo;
         if ([self.faqInfo objectForKey:FAQ_ITEM_HEADING_KEY])
         {
-            [self.headingLabel setAttributedText:[VJFAQViewUtilities attributedString:[self.faqInfo objectForKey:FAQ_ITEM_HEADING_KEY]]];
+            [self.headingLabel setAttributedText:[[self.faqInfo objectForKey:FAQ_ITEM_HEADING_KEY] attributedString]];
         }
         if ([self.faqInfo objectForKey:FAQ_ITEM_VALUE_KEY])
         {
-            [self.descriptionTextView setAttributedText:[VJFAQViewUtilities attributedString:[self.faqInfo objectForKey:FAQ_ITEM_VALUE_KEY]]];
+            [self.descriptionTextView setAttributedText:[[self.faqInfo objectForKey:FAQ_ITEM_VALUE_KEY] attributedString]];
         }
     }
     

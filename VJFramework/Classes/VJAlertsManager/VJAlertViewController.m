@@ -44,7 +44,7 @@
 #define OTHER_BUTTON_START_TAG  6500
 
 #define START_Y_OFFSET              10
-#define OFFSET_BETWEEN_CONTROLS     10
+#define OFFSET_BETWEEN_CONTROLS     20
 
 #define ALERT_BUTTON_HEIGHT         40.0
 #define OFFSET_FOR_ALERT_VIEW       30.0
@@ -64,6 +64,7 @@
 
 @interface VJAlertViewController ()
 
+@property (nonatomic, weak) IBOutlet UIImageView *backgroundImageView;
 @property (nonatomic, weak) IBOutlet UIView *contentHolderView;
 @property (nonatomic, weak) IBOutlet UILabel *alertTitleLabel;
 @property (nonatomic, weak) IBOutlet UILabel *alertMessageLabel;
@@ -73,6 +74,13 @@
 @property (nonatomic, strong) NSString *alertMessage;
 @property (nonatomic, strong) NSString *cancelButton;
 @property (nonatomic, strong) NSArray *otherButtons;
+
+@property (nonatomic, strong) UIColor *alertBackgroundColor;
+@property (nonatomic, strong) UIImage *alertBackgroundImage;
+@property (nonatomic, strong) UIColor *alertContentBackgroundColor;
+@property (nonatomic, assign) NSTextAlignment alertContentAlignment;
+@property (nonatomic, assign) NSTextAlignment alertHeaderAlignment;
+@property (nonatomic, strong) UIColor *alertButtonsColor;
 
 @property (copy) void (^alertViewCompletionHandler)(BOOL isCancelButton, NSInteger buttonIndex);
 
@@ -104,7 +112,7 @@
 
 #pragma mark - Designated Initializer Methods
 
-- (id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles completion:(void (^)(BOOL isCancelButton, NSInteger buttonIndex))completion
+- (id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles backgroundColor:(UIColor *)backgroundColor backgroundImage:(UIImage *)backgroundImage contentBackgroundColor:(UIColor *)contentBackgroundColor contentAlignment:(NSTextAlignment)contentAlignment headerAlignment:(NSTextAlignment)headerAlignment buttonsColor:(UIColor *)buttonsColor completion:(void (^)(BOOL isCancelButton, NSInteger buttonIndex))completion
 {
     self = [super initWithNibName:NSStringFromClass([VJAlertViewController class]) bundle:[NSBundle bundleWithIdentifier:VJFRAMEWORK_IDENTIFIER]];
     if (self)
@@ -113,6 +121,13 @@
         self.alertMessage = message;
         self.cancelButton = cancelButtonTitle;
         self.otherButtons = otherButtonTitles;
+        
+        self.alertBackgroundColor = backgroundColor;
+        self.alertBackgroundImage = backgroundImage;
+        self.alertContentBackgroundColor = contentBackgroundColor;
+        self.alertContentAlignment = contentAlignment;
+        self.alertHeaderAlignment = headerAlignment;
+        self.alertButtonsColor = buttonsColor;
         
         self.alertViewCompletionHandler = completion;
     }
@@ -188,9 +203,12 @@
 
 - (void)initialize
 {
-    [self.view setBackgroundColor:ALERT_VIEW_BACKGROUND_COLOR];
+    [self.view setBackgroundColor:((nil != self.alertBackgroundColor)?self.alertBackgroundColor:ALERT_VIEW_BACKGROUND_COLOR)];
     
-    [self.contentHolderView setBackgroundColor:ALERT_CONTENT_HOLDER_VIEW_COLOR];
+    [self.backgroundImageView setHidden:((nil == self.alertBackgroundImage)?YES:NO)];
+    [self.backgroundImageView setImage:self.alertBackgroundImage];
+    
+    [self.contentHolderView setBackgroundColor:((nil != self.alertContentBackgroundColor)?self.alertContentBackgroundColor:ALERT_CONTENT_HOLDER_VIEW_COLOR)];
     [self.contentHolderView.layer setCornerRadius:10.0];
     [self.contentHolderView setClipsToBounds:YES];
     
@@ -204,17 +222,26 @@
 - (UIButton *)getButtonWithTitle:(NSString *)buttonTitle isCancelButton:(BOOL)cancelButton
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0.0, 0.0, self.buttonsHolderScrollView.frame.size.width, ALERT_BUTTON_HEIGHT)];
-    [button setTitle:buttonTitle forState:UIControlStateNormal];
-    [button setTitleColor:ALERT_BUTTONS_COLOR forState:UIControlStateNormal];
+    [button setFrame:CGRectMake(0.0, 0.0, ((2 == [self totalNumberOfButtons])?((self.buttonsHolderScrollView.frame.size.width - 1) * 0.5):self.buttonsHolderScrollView.frame.size.width), ALERT_BUTTON_HEIGHT)];
+    if ([buttonTitle isAttributedString])
+        [button setAttributedTitle:[buttonTitle attributedString] forState:UIControlStateNormal];
+    else
+    {
+        [button setTitle:buttonTitle forState:UIControlStateNormal];
+        [button setTitleColor:ALERT_BUTTONS_COLOR forState:UIControlStateNormal];
+    }
+    if (nil != self.alertButtonsColor)
+        [button setBackgroundColor:self.alertButtonsColor];
     if (cancelButton)
     {
-        [button.titleLabel setFont:ALERT_CANCEL_BUTTON_FONT];
+        if (![buttonTitle isAttributedString])
+            [button.titleLabel setFont:ALERT_CANCEL_BUTTON_FONT];
         [button setTag:CANCEL_BUTTON_TAG];
     }
     else
     {
-        [button.titleLabel setFont:ALERT_NORMAL_BUTTON_FONT];
+        if (![buttonTitle isAttributedString])
+            [button.titleLabel setFont:ALERT_NORMAL_BUTTON_FONT];
     }
     
     [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -227,7 +254,7 @@
     CGFloat yAxis = START_Y_OFFSET;
     
     [self organizeTitleFromYAxis:yAxis];
-    yAxis += (([self.alertTitleLabel isHidden])?0.0:(self.alertTitleLabel.frame.size.height + OFFSET_BETWEEN_CONTROLS));
+    yAxis += (([self.alertTitleLabel isHidden])?0.0:(self.alertTitleLabel.frame.size.height + (OFFSET_BETWEEN_CONTROLS * 0.5)));
     
     CGFloat messageMaxHeight = ([self getMaxHeightForAlertView] - yAxis) * 0.5;
     [self organizeMessageFromYAxis:yAxis maxHeight:messageMaxHeight];
@@ -248,8 +275,12 @@
 {
     if ((nil != self.alertTitle) && (0 < [self.alertTitle length]))
     {
-        self.alertTitleLabel.text = self.alertTitle;
+        if ([self.alertTitle isAttributedString])
+            self.alertTitleLabel.attributedText = [self.alertTitle attributedString];
+        else
+            self.alertTitleLabel.text = self.alertTitle;
         self.alertTitleLabel.hidden = NO;
+        self.alertTitleLabel.textAlignment = self.alertHeaderAlignment;
         NSInteger numberOfLinesForTitle = 1;
         CGSize titleSize = [self.alertTitle getSizeForWidth:self.alertTitleLabel.frame.size.width
                                                    withFont:self.alertTitleLabel.font
@@ -269,8 +300,12 @@
 {
     if ((nil != self.alertMessage) && (0 < [self.alertMessage length]))
     {
-        self.alertMessageLabel.text = self.alertMessage;
+        if ([self.alertMessage isAttributedString])
+            self.alertMessageLabel.attributedText = [self.alertMessage attributedString];
+        else
+            self.alertMessageLabel.text = self.alertMessage;
         self.alertMessageLabel.hidden = NO;
+        self.alertMessageLabel.textAlignment = self.alertContentAlignment;
         NSInteger numberOfLinesForMessage = 1;
         CGSize messageSize = [self.alertMessage getSizeForWidth:self.alertMessageLabel.frame.size.width
                                                        withFont:self.alertMessageLabel.font
@@ -293,6 +328,7 @@
 {
     if (0 < [self totalNumberOfButtons])
     {
+        NSInteger addedButtons = 0;
         [self.buttonsHolderScrollView setHidden:NO];
         CGFloat buttonYAxis = 0.0;
         for (int index = 0; index < [self.otherButtons count]; index++)
@@ -300,15 +336,23 @@
             UIButton *button = [self getButtonWithTitle:[self.otherButtons objectAtIndex:index] isCancelButton:NO];
             CGRect buttonFrame = button.frame;
             buttonFrame.origin.y = buttonYAxis;
+            if (2 == [self totalNumberOfButtons])
+            {
+                if (1 == addedButtons)
+                {
+                    buttonFrame.origin.x = (buttonFrame.size.width + 1);
+                }
+            }
             button.frame = buttonFrame;
             
             [button setTag:(OTHER_BUTTON_START_TAG + index)];
             [self.buttonsHolderScrollView addSubview:button];
-            buttonYAxis += buttonFrame.size.height;
+            addedButtons++;
+            buttonYAxis += (((2 == [self totalNumberOfButtons]) && (0 == addedButtons))?buttonFrame.size.height:0.0);
             
             BOOL shouldAddButtonSeparator = NO;
-            if (((nil != self.cancelButton) && (0 < [self.cancelButton length])) ||
-                (index < ([self.otherButtons count] - 1)))
+            if ((((nil != self.cancelButton) && (0 < [self.cancelButton length])) || (index < ([self.otherButtons count] - 1))) &&
+                (2 != [self totalNumberOfButtons]))
                 shouldAddButtonSeparator = YES;
             
             if (shouldAddButtonSeparator)
@@ -325,9 +369,17 @@
             UIButton *button = [self getButtonWithTitle:self.cancelButton isCancelButton:YES];
             CGRect buttonFrame = button.frame;
             buttonFrame.origin.y = buttonYAxis;
+            if (2 == [self totalNumberOfButtons])
+            {
+                if (1 == addedButtons)
+                {
+                    buttonFrame.origin.x = (buttonFrame.size.width + 1);
+                }
+            }
             button.frame = buttonFrame;
             
             [self.buttonsHolderScrollView addSubview:button];
+            addedButtons++;
             buttonYAxis += buttonFrame.size.height;
         }
         

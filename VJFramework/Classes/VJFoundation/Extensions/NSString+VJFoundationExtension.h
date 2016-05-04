@@ -42,3 +42,14 @@
 - (CGSize)getSizeForWidth:(CGFloat)width withFont:(UIFont *)font numberOfLines:(NSInteger *)lines;
 
 @end
+
+
+@interface NSString (VJFAQView)
+
+- (NSDictionary *)attributes;
+
+- (NSAttributedString *)attributedString;
+
+- (BOOL)isAttributedString;
+
+@end

@@ -50,6 +50,13 @@
 @property (nonatomic, strong) NSMutableArray *queuedAlerts;
 @property (nonatomic, assign) BOOL isAlertShown;
 
+@property (nonatomic, strong) UIColor *alertBackgroundColor;
+@property (nonatomic, strong) UIImage *alertBackgroundImage;
+@property (nonatomic, strong) UIColor *alertContentBackgroundColor;
+@property (nonatomic, assign) NSTextAlignment alertContentAlignment;
+@property (nonatomic, assign) NSTextAlignment alertHeaderAlignment;
+@property (nonatomic, strong) UIColor *alertButtonsColor;
+
 @property (nonatomic, strong) VJAlertViewController *alertViewController;
 
 #pragma mark - Private Methods
@@ -83,9 +90,43 @@
     
     dispatch_once(&predicate, ^{
         _manager = [[VJAlertsManager alloc] init];
+        [_manager setContentAlignment:NSTextAlignmentCenter];
+        [_manager setHeaderAlignment:NSTextAlignmentCenter];
     });
     
     return _manager;
+}
+
+#pragma mark - Formatting Method
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor
+{
+    self.alertBackgroundColor = backgroundColor;
+}
+
+- (void)setBackgroundImage:(UIImage *)backgroundImage
+{
+    self.alertBackgroundImage = backgroundImage;
+}
+
+- (void)setContentBackgroundColor:(UIColor *)contentBackgroundColor
+{
+    self.alertContentBackgroundColor = contentBackgroundColor;
+}
+
+- (void)setContentAlignment:(NSTextAlignment)contentAlignment
+{
+    self.alertContentAlignment = contentAlignment;
+}
+
+- (void)setHeaderAlignment:(NSTextAlignment)headerAlignment
+{
+    self.alertHeaderAlignment = headerAlignment;
+}
+
+- (void)setButtonsColor:(UIColor *)buttonsColor
+{
+    self.alertButtonsColor = buttonsColor;
 }
 
 #pragma mark - Custom Method
@@ -121,7 +162,7 @@
     self.isAlertShown = YES;
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     
-    self.alertViewController = [[VJAlertViewController alloc] initWithTitle:[alertInfo objectForKey:ALERT_TITLE_KEY] message:[alertInfo objectForKey:ALERT_MESSAGE_KEY] cancelButtonTitle:[alertInfo objectForKey:ALERT_CANCEL_BUTTON_KEY] otherButtonTitles:[alertInfo objectForKey:ALERT_OTHER_BUTTONS_KEY] completion:^(BOOL isCancelButton, NSInteger buttonIndex){
+    self.alertViewController = [[VJAlertViewController alloc] initWithTitle:[alertInfo objectForKey:ALERT_TITLE_KEY] message:[alertInfo objectForKey:ALERT_MESSAGE_KEY] cancelButtonTitle:[alertInfo objectForKey:ALERT_CANCEL_BUTTON_KEY] otherButtonTitles:[alertInfo objectForKey:ALERT_OTHER_BUTTONS_KEY] backgroundColor:self.alertBackgroundColor backgroundImage:self.alertBackgroundImage contentBackgroundColor:self.alertContentBackgroundColor contentAlignment:self.alertContentAlignment headerAlignment:self.alertHeaderAlignment buttonsColor:self.alertButtonsColor  completion:^(BOOL isCancelButton, NSInteger buttonIndex){
         
         void (^completionHandler)(BOOL isCancelButton, NSInteger buttonIndex) = [alertInfo objectForKey:ALERT_COMPLETION_BLOCK_KEY];
         completionHandler(isCancelButton, buttonIndex);

@@ -5,10 +5,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AlertViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VJAlertViewController">
             <connections>
                 <outlet property="alertMessageLabel" destination="9UX-nl-Gxy" id="n6f-5E-nDc"/>
                 <outlet property="alertTitleLabel" destination="NW2-lN-Jr3" id="mJV-3o-CuZ"/>
+                <outlet property="backgroundImageView" destination="425-OA-kiF" id="BCe-fe-mRo"/>
                 <outlet property="buttonsHolderScrollView" destination="rW2-aO-1z1" id="cHR-qo-5V5"/>
                 <outlet property="contentHolderView" destination="4Xh-E2-4xm" id="NSY-7K-KKL"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -19,6 +20,10 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="425-OA-kiF" userLabel="Background ImageView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                </imageView>
                 <view autoresizesSubviews="NO" contentMode="scaleToFill" id="4Xh-E2-4xm" userLabel="Content Holder View">
                     <rect key="frame" x="20" y="159" width="280" height="250"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -46,7 +51,7 @@
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="-227" y="392"/>
+            <point key="canvasLocation" x="-337" y="389"/>
         </view>
     </objects>
 </document>
