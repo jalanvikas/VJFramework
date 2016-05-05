@@ -41,6 +41,7 @@
 
 #define ALERT_TITLE_KEY                 @"alertTitle"
 #define ALERT_MESSAGE_KEY               @"alertMessage"
+#define ALERT_SELECTION_LIST_KEY        @"alertSelectionList"
 #define ALERT_CANCEL_BUTTON_KEY         @"alertCancelButton"
 #define ALERT_OTHER_BUTTONS_KEY         @"alertOtherButtons"
 #define ALERT_COMPLETION_BLOCK_KEY      @"alertCompletionBlock"
@@ -56,6 +57,7 @@
 @property (nonatomic, assign) NSTextAlignment alertContentAlignment;
 @property (nonatomic, assign) NSTextAlignment alertHeaderAlignment;
 @property (nonatomic, strong) UIColor *alertButtonsColor;
+@property (nonatomic, strong) UIColor *alertListTintColor;
 
 @property (nonatomic, strong) VJAlertViewController *alertViewController;
 
@@ -129,6 +131,11 @@
     self.alertButtonsColor = buttonsColor;
 }
 
+- (void)setSelectionListTintColor:(UIColor *)tintColor
+{
+    self.alertListTintColor = tintColor;
+}
+
 #pragma mark - Custom Method
 
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles completion:(void (^)(BOOL isCancelButton, NSInteger buttonIndex))completion
@@ -155,6 +162,28 @@
     }
 }
 
+- (void)showAlertWithTitle:(NSString *)title selectionList:(NSArray *)list buttonTitle:(NSString *)buttonTitle completion:(void (^)(BOOL selected, NSInteger selectedListIndex))completion
+{
+    NSMutableDictionary *alertInfo = [NSMutableDictionary dictionary];
+    if (nil != title)
+        [alertInfo setObject:title forKey:ALERT_TITLE_KEY];
+    if (nil != list)
+        [alertInfo setObject:list forKey:ALERT_SELECTION_LIST_KEY];
+    if (nil != buttonTitle)
+        [alertInfo setObject:buttonTitle forKey:ALERT_CANCEL_BUTTON_KEY];
+    if (nil != completion)
+        [alertInfo setObject:completion forKey:ALERT_COMPLETION_BLOCK_KEY];
+    
+    if (self.isAlertShown)
+    {
+        [self.queuedAlerts addObject:alertInfo];
+    }
+    else
+    {
+        [self showAlertWithInfo:alertInfo];
+    }
+}
+
 #pragma mark - Private Methods
 
 - (void)showAlertWithInfo:(NSDictionary *)alertInfo
@@ -162,7 +191,7 @@
     self.isAlertShown = YES;
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     
-    self.alertViewController = [[VJAlertViewController alloc] initWithTitle:[alertInfo objectForKey:ALERT_TITLE_KEY] message:[alertInfo objectForKey:ALERT_MESSAGE_KEY] cancelButtonTitle:[alertInfo objectForKey:ALERT_CANCEL_BUTTON_KEY] otherButtonTitles:[alertInfo objectForKey:ALERT_OTHER_BUTTONS_KEY] backgroundColor:self.alertBackgroundColor backgroundImage:self.alertBackgroundImage contentBackgroundColor:self.alertContentBackgroundColor contentAlignment:self.alertContentAlignment headerAlignment:self.alertHeaderAlignment buttonsColor:self.alertButtonsColor  completion:^(BOOL isCancelButton, NSInteger buttonIndex){
+    self.alertViewController = [[VJAlertViewController alloc] initWithTitle:[alertInfo objectForKey:ALERT_TITLE_KEY] message:[alertInfo objectForKey:ALERT_MESSAGE_KEY] selectionList:[alertInfo objectForKey:ALERT_SELECTION_LIST_KEY] listTintColor:self.alertListTintColor cancelButtonTitle:[alertInfo objectForKey:ALERT_CANCEL_BUTTON_KEY] otherButtonTitles:[alertInfo objectForKey:ALERT_OTHER_BUTTONS_KEY] backgroundColor:self.alertBackgroundColor backgroundImage:self.alertBackgroundImage contentBackgroundColor:self.alertContentBackgroundColor contentAlignment:self.alertContentAlignment headerAlignment:self.alertHeaderAlignment buttonsColor:self.alertButtonsColor completion:^(BOOL isCancelButton, NSInteger buttonIndex){
         
         void (^completionHandler)(BOOL isCancelButton, NSInteger buttonIndex) = [alertInfo objectForKey:ALERT_COMPLETION_BLOCK_KEY];
         completionHandler(isCancelButton, buttonIndex);

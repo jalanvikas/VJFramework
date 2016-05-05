@@ -40,14 +40,16 @@
 #import "VJFramework+Private.h"
 #import "NSString+VJFoundationExtension.h"
 
-#define CANCEL_BUTTON_TAG       4321
-#define OTHER_BUTTON_START_TAG  6500
+#define CANCEL_BUTTON_TAG                               4321
+#define OTHER_BUTTON_START_TAG                          6500
 
-#define START_Y_OFFSET              10
-#define OFFSET_BETWEEN_CONTROLS     20
+#define START_Y_OFFSET                                  10
+#define OFFSET_BETWEEN_CONTROLS                         15
 
-#define ALERT_BUTTON_HEIGHT         40.0
-#define OFFSET_FOR_ALERT_VIEW       30.0
+#define ALERT_BUTTON_HEIGHT                             40.0
+#define OFFSET_FOR_ALERT_VIEW                           30.0
+
+#define SELECTION_LIST_TABLE_VIEW_CELL_HEIGHT           40.0
 
 #define ALERT_VIEW_BACKGROUND_COLOR                         [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6]
 #define ALERT_CONTENT_HOLDER_VIEW_COLOR                     [UIColor whiteColor]
@@ -62,16 +64,19 @@
 #define ALERT_CANCEL_BUTTON_FONT                        [UIFont boldSystemFontOfSize:15]
 
 
-@interface VJAlertViewController ()
+@interface VJAlertViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UIImageView *backgroundImageView;
 @property (nonatomic, weak) IBOutlet UIView *contentHolderView;
 @property (nonatomic, weak) IBOutlet UILabel *alertTitleLabel;
 @property (nonatomic, weak) IBOutlet UILabel *alertMessageLabel;
+@property (nonatomic, weak) IBOutlet UITableView *alertSelectionListTableView;
 @property (nonatomic, weak) IBOutlet UIScrollView *buttonsHolderScrollView;
 
 @property (nonatomic, strong) NSString *alertTitle;
 @property (nonatomic, strong) NSString *alertMessage;
+@property (nonatomic, strong) NSArray *alertSelectionList;
+@property (nonatomic, assign) NSInteger selectedIndex;
 @property (nonatomic, strong) NSString *cancelButton;
 @property (nonatomic, strong) NSArray *otherButtons;
 
@@ -81,6 +86,7 @@
 @property (nonatomic, assign) NSTextAlignment alertContentAlignment;
 @property (nonatomic, assign) NSTextAlignment alertHeaderAlignment;
 @property (nonatomic, strong) UIColor *alertButtonsColor;
+@property (nonatomic, strong) UIColor *alertListTintColor;
 
 @property (copy) void (^alertViewCompletionHandler)(BOOL isCancelButton, NSInteger buttonIndex);
 
@@ -100,6 +106,8 @@
 
 - (void)organizeMessageFromYAxis:(CGFloat)yAxis maxHeight:(CGFloat)maxHeight;
 
+- (void)organizeSelectionListYAxis:(CGFloat)yAxis maxHeight:(CGFloat)maxHeight;
+
 - (void)organizeButtonsFromYAxis:(CGFloat)yAxis maxHeight:(CGFloat)maxHeight;
 
 #pragma mark - Action Methods
@@ -112,13 +120,16 @@
 
 #pragma mark - Designated Initializer Methods
 
-- (id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles backgroundColor:(UIColor *)backgroundColor backgroundImage:(UIImage *)backgroundImage contentBackgroundColor:(UIColor *)contentBackgroundColor contentAlignment:(NSTextAlignment)contentAlignment headerAlignment:(NSTextAlignment)headerAlignment buttonsColor:(UIColor *)buttonsColor completion:(void (^)(BOOL isCancelButton, NSInteger buttonIndex))completion
+- (id)initWithTitle:(NSString *)title message:(NSString *)message selectionList:(NSArray *)list listTintColor:(UIColor *)listTintColor cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles backgroundColor:(UIColor *)backgroundColor backgroundImage:(UIImage *)backgroundImage contentBackgroundColor:(UIColor *)contentBackgroundColor contentAlignment:(NSTextAlignment)contentAlignment headerAlignment:(NSTextAlignment)headerAlignment buttonsColor:(UIColor *)buttonsColor completion:(void (^)(BOOL isCancelButton, NSInteger buttonIndex))completion
 {
     self = [super initWithNibName:NSStringFromClass([VJAlertViewController class]) bundle:[NSBundle bundleWithIdentifier:VJFRAMEWORK_IDENTIFIER]];
     if (self)
     {
         self.alertTitle = title;
         self.alertMessage = message;
+        self.alertSelectionList = list;
+        self.alertListTintColor = listTintColor;
+        self.selectedIndex = -1;
         self.cancelButton = cancelButtonTitle;
         self.otherButtons = otherButtonTitles;
         
@@ -217,6 +228,11 @@
     
     [self.alertMessageLabel setFont:ALERT_MESSAGE_LABEL_FONT];
     [self.alertMessageLabel setTextColor:ALERT_MESSAGE_LABEL_COLOR];
+    
+    [self.alertMessageLabel setHidden:((nil == self.alertSelectionList)?NO:YES)];
+    [self.alertSelectionListTableView setHidden:((nil == self.alertSelectionList)?YES:NO)];
+    [self.alertSelectionListTableView setBackgroundColor:[UIColor clearColor]];
+    [self.alertSelectionListTableView setTintColor:((nil == self.alertListTintColor)?[UIColor whiteColor]:self.alertListTintColor)];
 }
 
 - (UIButton *)getButtonWithTitle:(NSString *)buttonTitle isCancelButton:(BOOL)cancelButton
@@ -257,8 +273,16 @@
     yAxis += (([self.alertTitleLabel isHidden])?0.0:(self.alertTitleLabel.frame.size.height + (OFFSET_BETWEEN_CONTROLS * 0.5)));
     
     CGFloat messageMaxHeight = ([self getMaxHeightForAlertView] - yAxis) * 0.5;
-    [self organizeMessageFromYAxis:yAxis maxHeight:messageMaxHeight];
-    yAxis += (([self.alertMessageLabel isHidden])?0.0:(self.alertMessageLabel.frame.size.height + OFFSET_BETWEEN_CONTROLS));
+    if (nil == self.alertSelectionList)
+    {
+        [self organizeMessageFromYAxis:yAxis maxHeight:messageMaxHeight];
+        yAxis += (([self.alertMessageLabel isHidden])?0.0:(self.alertMessageLabel.frame.size.height + OFFSET_BETWEEN_CONTROLS));
+    }
+    else
+    {
+        [self organizeSelectionListYAxis:yAxis maxHeight:messageMaxHeight];
+        yAxis += (([self.alertSelectionListTableView isHidden])?0.0:(self.alertSelectionListTableView.frame.size.height + OFFSET_BETWEEN_CONTROLS));
+    }
     
     CGFloat buttonsMaxHeight = ([self getMaxHeightForAlertView] - yAxis);
     [self organizeButtonsFromYAxis:yAxis maxHeight:buttonsMaxHeight];
@@ -285,6 +309,9 @@
         CGSize titleSize = [self.alertTitle getSizeForWidth:self.alertTitleLabel.frame.size.width
                                                    withFont:self.alertTitleLabel.font
                                               numberOfLines:&numberOfLinesForTitle];
+        
+        [self.alertTitleLabel setNumberOfLines:numberOfLinesForTitle];
+        
         CGRect titleRect = self.alertTitleLabel.frame;
         titleRect.origin.y = yAxis;
         titleRect.size.height = titleSize.height;
@@ -321,6 +348,34 @@
     else
     {
         self.alertMessageLabel.hidden = YES;
+    }
+}
+
+- (void)organizeSelectionListYAxis:(CGFloat)yAxis maxHeight:(CGFloat)maxHeight
+{
+    if ((nil != self.alertSelectionList) && (0 < [self.alertSelectionList count]))
+    {
+        CGFloat totalHeightForList = 0.0;//([self.alertSelectionList count] * SELECTION_LIST_TABLE_VIEW_CELL_HEIGHT);
+        
+        for (NSString *cellTitle in self.alertSelectionList)
+        {
+            NSInteger numberOfLines = 1;
+            CGSize titleSize = [cellTitle getSizeForWidth:self.alertSelectionListTableView.frame.size.width
+                                                 withFont:ALERT_MESSAGE_LABEL_FONT
+                                            numberOfLines:&numberOfLines];
+            totalHeightForList += MAX(titleSize.height, SELECTION_LIST_TABLE_VIEW_CELL_HEIGHT);
+        }
+        self.alertSelectionListTableView.hidden = NO;
+        
+        CGRect selectionListTableViewRect = self.alertSelectionListTableView.frame;
+        selectionListTableViewRect.origin.y = yAxis;
+        selectionListTableViewRect.size.height = MIN(totalHeightForList, maxHeight);
+        
+        [self.alertSelectionListTableView setFrame:selectionListTableViewRect];
+    }
+    else
+    {
+        self.alertSelectionListTableView.hidden = YES;
     }
 }
 
@@ -404,13 +459,71 @@
     {
         if (CANCEL_BUTTON_TAG == [(UIButton *)sender tag])
         {
-            self.alertViewCompletionHandler(YES, -1);
+            if (nil == self.alertSelectionList)
+                self.alertViewCompletionHandler(YES, -1);
+            else
+                self.alertViewCompletionHandler(((-1 == self.selectedIndex)?NO:YES), self.selectedIndex);
         }
         else
         {
             self.alertViewCompletionHandler(NO, ([(UIButton *)sender tag] - OTHER_BUTTON_START_TAG));
         }
     }
+}
+
+#pragma mark - UITableViewDelegate Methods
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *cellTitle = [self.alertSelectionList objectAtIndex:indexPath.row];
+    NSInteger numberOfLines = 1;
+    CGSize titleSize = [cellTitle getSizeForWidth:self.alertSelectionListTableView.frame.size.width
+                                         withFont:ALERT_MESSAGE_LABEL_FONT
+                                    numberOfLines:&numberOfLines];
+    return MAX(titleSize.height, SELECTION_LIST_TABLE_VIEW_CELL_HEIGHT);
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.selectedIndex = indexPath.row;
+    [self.alertSelectionListTableView reloadData];
+}
+
+#pragma mark - UITableViewDataSource Methods
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.alertSelectionList count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"selectionListItemCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (nil == cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.backgroundColor = [UIColor clearColor];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [[cell textLabel] setTextColor:ALERT_MESSAGE_LABEL_COLOR];
+        [[cell textLabel] setFont:ALERT_MESSAGE_LABEL_FONT];
+    }
+    
+    NSString *cellTitle = [self.alertSelectionList objectAtIndex:indexPath.row];
+    if ([cellTitle isAttributedString])
+        [[cell textLabel] setAttributedText:[cellTitle attributedString]];
+    else
+        [[cell textLabel] setText:cellTitle];
+    
+    NSInteger numberOfLines = 1;
+    CGSize titleSize = [cellTitle getSizeForWidth:self.alertSelectionListTableView.frame.size.width
+                                         withFont:ALERT_MESSAGE_LABEL_FONT
+                                    numberOfLines:&numberOfLines];
+    [[cell textLabel] setNumberOfLines:numberOfLines];
+    
+    [cell setAccessoryType:((self.selectedIndex == indexPath.row)?UITableViewCellAccessoryCheckmark:UITableViewCellAccessoryNone)];
+    
+    return cell;
 }
 
 @end

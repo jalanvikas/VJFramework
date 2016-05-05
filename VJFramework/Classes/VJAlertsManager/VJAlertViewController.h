@@ -42,6 +42,6 @@
 
 #pragma mark - Designated Initializer Methods
 
-- (id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles backgroundColor:(UIColor *)backgroundColor backgroundImage:(UIImage *)backgroundImage contentBackgroundColor:(UIColor *)contentBackgroundColor contentAlignment:(NSTextAlignment)contentAlignment headerAlignment:(NSTextAlignment)headerAlignment buttonsColor:(UIColor *)buttonsColor completion:(void (^)(BOOL isCancelButton, NSInteger buttonIndex))completion;
+- (id)initWithTitle:(NSString *)title message:(NSString *)message selectionList:(NSArray *)list listTintColor:(UIColor *)listTintColor cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles backgroundColor:(UIColor *)backgroundColor backgroundImage:(UIImage *)backgroundImage contentBackgroundColor:(UIColor *)contentBackgroundColor contentAlignment:(NSTextAlignment)contentAlignment headerAlignment:(NSTextAlignment)headerAlignment buttonsColor:(UIColor *)buttonsColor completion:(void (^)(BOOL isCancelButton, NSInteger buttonIndex))completion;
 
 @end

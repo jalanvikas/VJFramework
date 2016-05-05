@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VJAlertViewController">
             <connections>
                 <outlet property="alertMessageLabel" destination="9UX-nl-Gxy" id="n6f-5E-nDc"/>
+                <outlet property="alertSelectionListTableView" destination="qPG-We-GTX" id="NtI-YW-TF5"/>
                 <outlet property="alertTitleLabel" destination="NW2-lN-Jr3" id="mJV-3o-CuZ"/>
                 <outlet property="backgroundImageView" destination="425-OA-kiF" id="BCe-fe-mRo"/>
                 <outlet property="buttonsHolderScrollView" destination="rW2-aO-1z1" id="cHR-qo-5V5"/>
@@ -35,6 +36,18 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="qPG-We-GTX" userLabel="Alert Selection List TableView">
+                            <rect key="frame" x="15" y="55" width="250" height="75"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="thC-5o-pD5"/>
+                                <outlet property="delegate" destination="-1" id="wyf-gN-SJx"/>
+                            </connections>
+                        </tableView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9UX-nl-Gxy" userLabel="Alert Message Label">
                             <rect key="frame" x="15" y="55" width="250" height="75"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>

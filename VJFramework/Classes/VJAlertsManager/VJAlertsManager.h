@@ -59,8 +59,12 @@
 
 - (void)setButtonsColor:(UIColor *)buttonsColor;
 
+- (void)setSelectionListTintColor:(UIColor *)tintColor;                 // Default White Color.
+
 #pragma mark - Custom Method
 
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles completion:(void (^)(BOOL isCancelButton, NSInteger buttonIndex))completion;
+
+- (void)showAlertWithTitle:(NSString *)title selectionList:(NSArray *)list buttonTitle:(NSString *)buttonTitle completion:(void (^)(BOOL selected, NSInteger selectedListIndex))completion;
 
 @end
