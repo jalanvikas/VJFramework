@@ -72,4 +72,40 @@
                            alpha:1.0f];
 }
 
++ (UIColor *)colorFromHexString:(NSString *)hex alpha:(CGFloat)alpha
+{
+    NSString *hexString = [[hex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
+    
+    // Hex String should be either 6 or 8 characters
+    if ([hexString length] < 6) return [UIColor grayColor];
+    
+    // strip 0X if exists
+    if ([hexString hasPrefix:@"0X"]) hexString = [hexString substringFromIndex:2];
+    
+    if ([hexString length] != 6) return  [UIColor grayColor];
+    
+    // Separate into r, g, b substrings
+    NSRange range;
+    range.location = 0;
+    range.length = 2;
+    NSString *redString = [hexString substringWithRange:range];
+    
+    range.location = 2;
+    NSString *greenString = [hexString substringWithRange:range];
+    
+    range.location = 4;
+    NSString *blueString = [hexString substringWithRange:range];
+    
+    // Scan values
+    unsigned int redColor, greenColor, blueColor;
+    [[NSScanner scannerWithString:redString] scanHexInt:&redColor];
+    [[NSScanner scannerWithString:greenString] scanHexInt:&greenColor];
+    [[NSScanner scannerWithString:blueString] scanHexInt:&blueColor];
+    
+    return [UIColor colorWithRed:((float) redColor / 255.0f)
+                           green:((float) greenColor / 255.0f)
+                            blue:((float) blueColor / 255.0f)
+                           alpha:alpha];
+}
+
 @end

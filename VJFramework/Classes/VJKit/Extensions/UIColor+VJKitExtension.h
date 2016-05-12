@@ -38,4 +38,6 @@
 
 + (UIColor *)colorFromHexString:(NSString *)hex;
 
++ (UIColor *)colorFromHexString:(NSString *)hex alpha:(CGFloat)alpha;
+
 @end
