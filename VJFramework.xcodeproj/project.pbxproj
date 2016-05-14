@@ -29,7 +29,11 @@
 		F66415BF1CAC062D00F9AD85 /* VJAlertViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F66415BA1CAC062D00F9AD85 /* VJAlertViewController.h */; };
 		F66415C01CAC062D00F9AD85 /* VJAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F66415BB1CAC062D00F9AD85 /* VJAlertViewController.m */; };
 		F66415C11CAC062D00F9AD85 /* VJAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66415BC1CAC062D00F9AD85 /* VJAlertViewController.xib */; };
+		F67A41611CE77D4D00E8005F /* NSAttributedString+VJFoundationExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F67A415F1CE77D4D00E8005F /* NSAttributedString+VJFoundationExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F67A41621CE77D4D00E8005F /* NSAttributedString+VJFoundationExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F67A41601CE77D4D00E8005F /* NSAttributedString+VJFoundationExtension.m */; };
 		F68FAB941C9FF7CF00BF603E /* VJFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = F68FAB931C9FF7CF00BF603E /* VJFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F698A2721CBD704900D168E3 /* VJDatePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = F698A2701CBD704900D168E3 /* VJDatePicker.h */; };
+		F698A2731CBD704900D168E3 /* VJDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F698A2711CBD704900D168E3 /* VJDatePicker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,9 +60,13 @@
 		F66415BA1CAC062D00F9AD85 /* VJAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VJAlertViewController.h; sourceTree = "<group>"; };
 		F66415BB1CAC062D00F9AD85 /* VJAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VJAlertViewController.m; sourceTree = "<group>"; };
 		F66415BC1CAC062D00F9AD85 /* VJAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VJAlertViewController.xib; sourceTree = "<group>"; };
+		F67A415F1CE77D4D00E8005F /* NSAttributedString+VJFoundationExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+VJFoundationExtension.h"; sourceTree = "<group>"; };
+		F67A41601CE77D4D00E8005F /* NSAttributedString+VJFoundationExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+VJFoundationExtension.m"; sourceTree = "<group>"; };
 		F68FAB901C9FF7CF00BF603E /* VJFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VJFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F68FAB931C9FF7CF00BF603E /* VJFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VJFramework.h; sourceTree = "<group>"; };
 		F68FAB951C9FF7CF00BF603E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F698A2701CBD704900D168E3 /* VJDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VJDatePicker.h; sourceTree = "<group>"; };
+		F698A2711CBD704900D168E3 /* VJDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VJDatePicker.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +104,8 @@
 				F619331A1CA50B28009C2718 /* VJComboBox.m */,
 				F62CDA131CBA95F4009FC4EA /* VJFAQView.h */,
 				F62CDA141CBA95F4009FC4EA /* VJFAQView.m */,
+				F698A2701CBD704900D168E3 /* VJDatePicker.h */,
+				F698A2711CBD704900D168E3 /* VJDatePicker.m */,
 			);
 			path = Subclasses;
 			sourceTree = "<group>";
@@ -113,6 +123,8 @@
 			children = (
 				F62FA0981CA53273005F3639 /* NSString+VJFoundationExtension.h */,
 				F62FA0991CA53273005F3639 /* NSString+VJFoundationExtension.m */,
+				F67A415F1CE77D4D00E8005F /* NSAttributedString+VJFoundationExtension.h */,
+				F67A41601CE77D4D00E8005F /* NSAttributedString+VJFoundationExtension.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -195,7 +207,9 @@
 				F619331D1CA50B28009C2718 /* VJAutoSuggestionTextField.h in Headers */,
 				F61933211CA50B28009C2718 /* VJComboBox.h in Headers */,
 				F619331B1CA50B28009C2718 /* UIImage+VJKitExtension.h in Headers */,
+				F698A2721CBD704900D168E3 /* VJDatePicker.h in Headers */,
 				F61933251CA50C06009C2718 /* UIColor+VJKitExtension.h in Headers */,
+				F67A41611CE77D4D00E8005F /* NSAttributedString+VJFoundationExtension.h in Headers */,
 				F62FA09A1CA53273005F3639 /* NSString+VJFoundationExtension.h in Headers */,
 				F66415BF1CAC062D00F9AD85 /* VJAlertViewController.h in Headers */,
 				F66415BD1CAC062D00F9AD85 /* VJAlertsManager.h in Headers */,
@@ -275,11 +289,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F67A41621CE77D4D00E8005F /* NSAttributedString+VJFoundationExtension.m in Sources */,
 				F61933221CA50B28009C2718 /* VJComboBox.m in Sources */,
 				F619331E1CA50B28009C2718 /* VJAutoSuggestionTextField.m in Sources */,
 				F66415BE1CAC062D00F9AD85 /* VJAlertsManager.m in Sources */,
 				F65C0AE21CA7C34100F6B685 /* UIView+VJKitExtension.m in Sources */,
 				F62FA09B1CA53273005F3639 /* NSString+VJFoundationExtension.m in Sources */,
+				F698A2731CBD704900D168E3 /* VJDatePicker.m in Sources */,
 				F66415C01CAC062D00F9AD85 /* VJAlertViewController.m in Sources */,
 				F619331C1CA50B28009C2718 /* UIImage+VJKitExtension.m in Sources */,
 				F62CDA161CBA95F4009FC4EA /* VJFAQView.m in Sources */,

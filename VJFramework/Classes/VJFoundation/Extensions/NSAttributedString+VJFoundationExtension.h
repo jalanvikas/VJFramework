@@ -1,17 +1,13 @@
 //
-//  VJFramework.h
+//  NSAttributedString+VJFoundationExtension.h
 //  VJFramework
 //
-//  Created by Vikas Jalan on 3/21/16.
-//  Copyright © 2016 http://www.vikasjalan.com All rights reserved.
+//  Created by Vikas Jalan on 5/14/16.
+//  Copyright 2016 http://www.vikasjalan.com All rights reserved.
 //  Contact on jalanvikas@gmail.com or contact@vikasjalan.com
 //
 //  Get the latest version from here:
-//  https://github.com/jalanvikas/ComboBox
-//
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are
-//  met:
+//  https://github.com/jalanvikas/VJFramework
 //
 //  * Redistributions of source code must retain the above copyright notice,
 //  this list of conditions and the following disclaimer.
@@ -34,27 +30,13 @@
 //  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 //  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-//! Project version number for VJFramework.
-FOUNDATION_EXPORT double VJFrameworkVersionNumber;
+@interface NSAttributedString (VJFoundationExtension)
 
-//! Project version string for VJFramework.
-FOUNDATION_EXPORT const unsigned char VJFrameworkVersionString[];
+- (CGSize)getSizeForWidth:(CGFloat)width numberOfLines:(NSInteger *)lines;
 
-// In this header, you should import all the public headers of your framework using statements like #import <VJFramework/PublicHeader.h>
-
-
-#import "VJAutoSuggestionTextField.h"
-#import "VJComboBox.h"
-#import "VJButton.h"
-#import "VJFAQView.h"
-
-#import "UIColor+VJKitExtension.h"
-#import "UIImage+VJKitExtension.h"
-#import "UIView+VJKitExtension.h"
-#import "NSString+VJFoundationExtension.h"
-#import "NSAttributedString+VJFoundationExtension.h"
-
-#import "VJAlertsManager.h"
+@end

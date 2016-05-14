@@ -47,7 +47,7 @@
     NSDictionary *attributes = @{NSFontAttributeName:font};
     
     CGSize textSize = [self sizeWithAttributes:attributes];
-    CGRect textRectForWidth = [self boundingRectWithSize:CGSizeMake(width, 9999)
+    CGRect textRectForWidth = [self boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX)
                                                  options:NSStringDrawingUsesLineFragmentOrigin
                                               attributes:attributes
                                                  context:nil];

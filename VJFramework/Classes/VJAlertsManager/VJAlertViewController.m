@@ -39,6 +39,7 @@
 #import "VJAlertViewController.h"
 #import "VJFramework+Private.h"
 #import "NSString+VJFoundationExtension.h"
+#import "NSAttributedString+VJFoundationExtension.h"
 
 #define CANCEL_BUTTON_TAG                               4321
 #define OTHER_BUTTON_START_TAG                          6500
@@ -327,16 +328,25 @@
 {
     if ((nil != self.alertMessage) && (0 < [self.alertMessage length]))
     {
+        NSInteger numberOfLinesForMessage = 1;
+        CGSize messageSize = CGSizeZero;
+                              
         if ([self.alertMessage isAttributedString])
-            self.alertMessageLabel.attributedText = [self.alertMessage attributedString];
+        {
+            NSAttributedString *attributedString = [self.alertMessage attributedString];
+            self.alertMessageLabel.attributedText = attributedString;
+            messageSize = [attributedString getSizeForWidth:self.alertMessageLabel.frame.size.width
+                                              numberOfLines:&numberOfLinesForMessage];
+        }
         else
+        {
             self.alertMessageLabel.text = self.alertMessage;
+            messageSize = [self.alertMessage getSizeForWidth:self.alertMessageLabel.frame.size.width
+                                                    withFont:self.alertMessageLabel.font
+                                               numberOfLines:&numberOfLinesForMessage];
+        }
         self.alertMessageLabel.hidden = NO;
         self.alertMessageLabel.textAlignment = self.alertContentAlignment;
-        NSInteger numberOfLinesForMessage = 1;
-        CGSize messageSize = [self.alertMessage getSizeForWidth:self.alertMessageLabel.frame.size.width
-                                                       withFont:self.alertMessageLabel.font
-                                                  numberOfLines:&numberOfLinesForMessage];
 
         [self.alertMessageLabel setNumberOfLines:numberOfLinesForMessage];
         
