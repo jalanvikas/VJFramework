@@ -300,16 +300,25 @@
 {
     if ((nil != self.alertTitle) && (0 < [self.alertTitle length]))
     {
+        NSInteger numberOfLinesForTitle = 1;
+        CGSize titleSize = CGSizeZero;
+        
         if ([self.alertTitle isAttributedString])
-            self.alertTitleLabel.attributedText = [self.alertTitle attributedString];
+        {
+            NSAttributedString *attributedString = [self.alertTitle attributedString];
+            self.alertTitleLabel.attributedText = attributedString;
+            titleSize = [attributedString getSizeForWidth:self.alertMessageLabel.frame.size.width
+                                              numberOfLines:&numberOfLinesForTitle];
+        }
         else
+        {
             self.alertTitleLabel.text = self.alertTitle;
+            titleSize = [self.alertTitle getSizeForWidth:self.alertTitleLabel.frame.size.width
+                                                withFont:self.alertTitleLabel.font
+                                           numberOfLines:&numberOfLinesForTitle];
+        }
         self.alertTitleLabel.hidden = NO;
         self.alertTitleLabel.textAlignment = self.alertHeaderAlignment;
-        NSInteger numberOfLinesForTitle = 1;
-        CGSize titleSize = [self.alertTitle getSizeForWidth:self.alertTitleLabel.frame.size.width
-                                                   withFont:self.alertTitleLabel.font
-                                              numberOfLines:&numberOfLinesForTitle];
         
         [self.alertTitleLabel setNumberOfLines:numberOfLinesForTitle];
         
@@ -487,9 +496,19 @@
 {
     NSString *cellTitle = [self.alertSelectionList objectAtIndex:indexPath.row];
     NSInteger numberOfLines = 1;
-    CGSize titleSize = [cellTitle getSizeForWidth:self.alertSelectionListTableView.frame.size.width
-                                         withFont:ALERT_MESSAGE_LABEL_FONT
-                                    numberOfLines:&numberOfLines];
+    CGSize titleSize = CGSizeZero;
+    
+    if ([cellTitle isAttributedString])
+    {
+        titleSize = [[cellTitle attributedString] getSizeForWidth:self.alertSelectionListTableView.frame.size.width
+                                                    numberOfLines:&numberOfLines];
+    }
+    else
+    {
+        titleSize = [cellTitle getSizeForWidth:self.alertSelectionListTableView.frame.size.width
+                                      withFont:ALERT_MESSAGE_LABEL_FONT
+                                 numberOfLines:&numberOfLines];
+    }
     return MAX(titleSize.height, SELECTION_LIST_TABLE_VIEW_CELL_HEIGHT);
 }
 
@@ -520,15 +539,24 @@
     }
     
     NSString *cellTitle = [self.alertSelectionList objectAtIndex:indexPath.row];
-    if ([cellTitle isAttributedString])
-        [[cell textLabel] setAttributedText:[cellTitle attributedString]];
-    else
-        [[cell textLabel] setText:cellTitle];
-    
     NSInteger numberOfLines = 1;
-    CGSize titleSize = [cellTitle getSizeForWidth:self.alertSelectionListTableView.frame.size.width
-                                         withFont:ALERT_MESSAGE_LABEL_FONT
-                                    numberOfLines:&numberOfLines];
+    CGSize titleSize = CGSizeZero;
+    
+    if ([cellTitle isAttributedString])
+    {
+        NSAttributedString *attributedString = [cellTitle attributedString];
+        [[cell textLabel] setAttributedText:attributedString];
+        titleSize = [attributedString getSizeForWidth:self.alertSelectionListTableView.frame.size.width
+                                        numberOfLines:&numberOfLines];
+    }
+    else
+    {
+        [[cell textLabel] setText:cellTitle];
+        titleSize = [cellTitle getSizeForWidth:self.alertSelectionListTableView.frame.size.width
+                                      withFont:ALERT_MESSAGE_LABEL_FONT
+                                 numberOfLines:&numberOfLines];
+    }
+    
     [[cell textLabel] setNumberOfLines:numberOfLines];
     
     [cell setAccessoryType:((self.selectedIndex == indexPath.row)?UITableViewCellAccessoryCheckmark:UITableViewCellAccessoryNone)];
