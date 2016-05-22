@@ -37,7 +37,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol VJFAQViewDelegate <NSObject>
+
+@optional
+- (void)receivedUserAction:(NSString *)userAction;
+
+@end
+
+
 @interface VJFAQView : UIView
+
+@property (nonatomic, assign) id<VJFAQViewDelegate> delegate;
 
 #pragma mark - Custom Methods
 

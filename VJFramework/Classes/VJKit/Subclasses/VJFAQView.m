@@ -41,16 +41,17 @@
 #import "NSString+VJFoundationExtension.h"
 
 
-#define FAQ_ITEM_HEADING_KEY        @"heading"
-#define FAQ_ITEM_VALUE_KEY          @"value"
-#define FAQ_ITEM_TITLE_KEY          @"title"
-#define FAQ_ITEM_IMAGE_KEY          @"image"
+#define FAQ_ITEM_HEADING_KEY            @"heading"
+#define FAQ_ITEM_VALUE_KEY              @"value"
+#define FAQ_ITEM_TITLE_KEY              @"title"
+#define FAQ_ITEM_IMAGE_KEY              @"image"
+#define FAQ_ITEM_USER_ACTION_KEY        @"userAction"
 
 #define OFFSET                                          15.0
-#define OFFSET_BETWEEN_ITEMS                            5.0
+#define OFFSET_BETWEEN_ITEMS                            10.0
 #define LIST_TABLE_VIEW_CELL_IDENTIFIER                 @"listTableViewCellIdentifier"
 
-#define LIST_TABLE_VIEW_CELL_HEIGHT                     35.0f
+#define LIST_TABLE_VIEW_CELL_HEIGHT                     50.0f
 #define LIST_TABLE_VIEW_CELL_SEPARATOR_HEIGHT           0.5f
 
 
@@ -143,12 +144,12 @@
     if (nil == cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LIST_TABLE_VIEW_CELL_IDENTIFIER];
-        cell.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = [UIColor whiteColor];
         
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         
-        UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0.0, (LIST_TABLE_VIEW_CELL_HEIGHT - 1), self.listTableView.bounds.size.width, LIST_TABLE_VIEW_CELL_SEPARATOR_HEIGHT)];
+        UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(5.0, (LIST_TABLE_VIEW_CELL_HEIGHT - 1), self.listTableView.bounds.size.width - 10, LIST_TABLE_VIEW_CELL_SEPARATOR_HEIGHT)];
         [separatorView setBackgroundColor:[UIColor lightGrayColor]];
         [cell addSubview:separatorView];
     }
@@ -418,6 +419,12 @@
 - (void)initializeWithFAQInfo:(id)faqInfo
 {
     self.faqInfo = faqInfo;
+    if ([self.faqInfo objectForKey:FAQ_ITEM_USER_ACTION_KEY])
+    {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(receivedUserAction:)])
+            [self.delegate receivedUserAction:[self.faqInfo objectForKey:FAQ_ITEM_USER_ACTION_KEY]];
+        return;
+    }
     
     if ([[self.faqInfo objectForKey:FAQ_ITEM_VALUE_KEY] isKindOfClass:[NSArray class]])
     {
@@ -465,6 +472,12 @@
     NSDictionary *itemInfo = [[view.faqInfo objectForKey:FAQ_ITEM_VALUE_KEY] objectAtIndex:index];
     if ([itemInfo objectForKey:FAQ_ITEM_VALUE_KEY])
     {
+        if ([itemInfo objectForKey:FAQ_ITEM_USER_ACTION_KEY])
+        {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(receivedUserAction:)])
+                [self.delegate receivedUserAction:[itemInfo objectForKey:FAQ_ITEM_USER_ACTION_KEY]];
+            return;
+        }
         if ([[itemInfo objectForKey:FAQ_ITEM_VALUE_KEY] isKindOfClass:[NSArray class]])
         {
             VJFAQListView *faqListView = [[VJFAQListView alloc] initWithFaqInfo:itemInfo];
