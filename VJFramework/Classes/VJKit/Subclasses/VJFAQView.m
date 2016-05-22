@@ -97,6 +97,8 @@
 
 - (void)initialize
 {
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
     self.headingLabel = [[UILabel alloc] initWithFrame:CGRectMake(OFFSET, OFFSET_BETWEEN_ITEMS, (self.frame.size.width - (OFFSET * 2)), 20.0)];
     self.headingLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self addSubview:self.headingLabel];
@@ -216,6 +218,8 @@
 
 - (void)initialize
 {
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
     CGRect headingLabelFrame = CGRectMake(OFFSET, OFFSET_BETWEEN_ITEMS, (self.frame.size.width - (OFFSET * 2)), 20.0);
     self.headingLabel = [[UILabel alloc] initWithFrame:headingLabelFrame];
     self.headingLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -250,6 +254,77 @@
 
 @end
 
+
+@interface VJFAQWebView : UIView <UIWebViewDelegate>
+
+@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
+
+@property (nonatomic, strong) NSDictionary *faqInfo;
+
+#pragma mark - Private Methods
+
+- (void)initialize;
+
+- (id)initWithFaqInfo:(NSDictionary *)faqInfo;
+
+@end
+
+
+@implementation VJFAQWebView
+
+#pragma mark - Private Methods
+
+- (void)initialize
+{
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    CGRect webViewFrame = CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height);
+    self.webView = [[UIWebView alloc] initWithFrame:webViewFrame];
+    self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.webView.backgroundColor = self.backgroundColor;
+    self.webView.delegate = self;
+    [self addSubview:self.webView];
+    
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicatorView.hidesWhenStopped = YES;
+    CGRect activityIndicatorViewFrame = self.activityIndicatorView.frame;
+    activityIndicatorViewFrame.origin.x = ((self.bounds.size.width - activityIndicatorViewFrame.size.width) * 0.5);
+    activityIndicatorViewFrame.origin.y = ((self.bounds.size.height - activityIndicatorViewFrame.size.height) * 0.5);
+    self.activityIndicatorView.frame = activityIndicatorViewFrame;
+    self.activityIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    [self addSubview:self.activityIndicatorView];
+}
+
+- (id)initWithFaqInfo:(NSDictionary *)faqInfo
+{
+    self = [super init];
+    if (self)
+    {
+        [self initialize];
+        self.faqInfo = faqInfo;
+        if ([self.faqInfo objectForKey:FAQ_ITEM_VALUE_KEY])
+        {
+            [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[self.faqInfo objectForKey:FAQ_ITEM_VALUE_KEY]]]];
+        }
+    }
+    
+    return self;
+}
+
+#pragma mark - UIWebViewDelegate Methods
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [self.activityIndicatorView startAnimating];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView;
+{
+    [self.activityIndicatorView stopAnimating];
+}
+
+@end
 
 
 @interface VJFAQView () <VJFAQListViewDelegate>
@@ -357,13 +432,29 @@
     }
     else if ([[self.faqInfo objectForKey:FAQ_ITEM_VALUE_KEY] isKindOfClass:[NSDictionary class]])
     {
-        VJFAQDetailView *faqDetailView = [[VJFAQDetailView alloc] initWithFaqInfo:[(NSDictionary *)self.faqInfo objectForKey:FAQ_ITEM_VALUE_KEY]];
-        [faqDetailView setBackgroundColor:self.backgroundColor];
-        [faqDetailView setFrame:self.bounds];
-        [self.faqViews addObject:faqDetailView];
-        
-        [self addSubview:faqDetailView];
-        self.displayedView = faqDetailView;
+        NSDictionary *faqInfo = [self.faqInfo objectForKey:FAQ_ITEM_VALUE_KEY];
+        NSString *faqValue = [faqInfo objectForKey:FAQ_ITEM_VALUE_KEY];
+        NSURL *faqURL = [NSURL URLWithString:faqValue];
+        if (nil == faqURL)
+        {
+            VJFAQDetailView *faqDetailView = [[VJFAQDetailView alloc] initWithFaqInfo:faqInfo];
+            [faqDetailView setBackgroundColor:self.backgroundColor];
+            [faqDetailView setFrame:self.bounds];
+            [self.faqViews addObject:faqDetailView];
+            
+            [self addSubview:faqDetailView];
+            self.displayedView = faqDetailView;
+        }
+        else
+        {
+            VJFAQWebView *faqWebView = [[VJFAQWebView alloc] initWithFaqInfo:faqInfo];
+            [faqWebView setBackgroundColor:self.backgroundColor];
+            [faqWebView setFrame:self.bounds];
+            [self.faqViews addObject:faqWebView];
+            
+            [self addSubview:faqWebView];
+            self.displayedView = faqWebView;
+        }
     }
 }
 
@@ -400,25 +491,42 @@
         }
         else if ([[itemInfo objectForKey:FAQ_ITEM_VALUE_KEY] isKindOfClass:[NSDictionary class]])
         {
-            VJFAQDetailView *faqDetailView = [[VJFAQDetailView alloc] initWithFaqInfo:[itemInfo objectForKey:FAQ_ITEM_VALUE_KEY]];
-            [faqDetailView setBackgroundColor:self.backgroundColor];
-            [self.faqViews addObject:faqDetailView];
+            UIView *faqView = nil;
+            NSDictionary *faqInfo = [itemInfo objectForKey:FAQ_ITEM_VALUE_KEY];
+            NSString *faqValue = [faqInfo objectForKey:FAQ_ITEM_VALUE_KEY];
+            NSURL *faqURL = [NSURL URLWithString:faqValue];
+            if (nil == faqURL)
+            {
+                VJFAQDetailView *faqDetailView = [[VJFAQDetailView alloc] initWithFaqInfo:faqInfo];
+                [faqDetailView setBackgroundColor:self.backgroundColor];
+                [self.faqViews addObject:faqDetailView];
+                
+                faqView = faqDetailView;
+            }
+            else
+            {
+                VJFAQWebView *faqWebView = [[VJFAQWebView alloc] initWithFaqInfo:faqInfo];
+                [faqWebView setBackgroundColor:self.backgroundColor];
+                [self.faqViews addObject:faqWebView];
+                
+                faqView = faqWebView;
+            }
             
             CGRect faqDetailViewFrame = self.bounds;
             faqDetailViewFrame.origin.x = faqDetailViewFrame.size.width;
-            [faqDetailView setFrame:faqDetailViewFrame];
+            [faqView setFrame:faqDetailViewFrame];
             
-            [self addSubview:faqDetailView];
+            [self addSubview:faqView];
             [UIView animateWithDuration:0.3 animations:^{
                 CGRect displayingViewFrame = [(UIView *)self.displayedView frame];
-                faqDetailView.frame = displayingViewFrame;
+                faqView.frame = displayingViewFrame;
                 
                 CGRect displayedViewFrame = [(UIView *)self.displayedView frame];
                 displayedViewFrame.origin.x = -displayedViewFrame.size.width;
                 [(UIView *)self.displayedView setFrame:displayedViewFrame];
             }completion:^(BOOL finished){
                 [self.displayedView removeFromSuperview];
-                self.displayedView = faqDetailView;
+                self.displayedView = faqView;
             }];
         }
     }

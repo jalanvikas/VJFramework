@@ -514,7 +514,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectedIndex = indexPath.row;
+    if (indexPath.row == self.selectedIndex)
+        self.selectedIndex = -1;
+    else
+        self.selectedIndex = indexPath.row;
     [self.alertSelectionListTableView reloadData];
 }
 
