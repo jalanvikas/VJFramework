@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		F6C346A01D01973C00CDB523 /* Universal Builder */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = F6C346A11D01973C00CDB523 /* Build configuration list for PBXAggregateTarget "Universal Builder" */;
+			buildPhases = (
+				F6C346A41D01974700CDB523 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Universal Builder";
+			productName = "Universal Builder";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		F619331B1CA50B28009C2718 /* UIImage+VJKitExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = F61933121CA50B27009C2718 /* UIImage+VJKitExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F619331C1CA50B28009C2718 /* UIImage+VJKitExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = F61933131CA50B27009C2718 /* UIImage+VJKitExtension.m */; };
@@ -253,6 +267,9 @@
 					F68FAB8F1C9FF7CF00BF603E = {
 						CreatedOnToolsVersion = 7.2;
 					};
+					F6C346A01D01973C00CDB523 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
 				};
 			};
 			buildConfigurationList = F68FAB8A1C9FF7CF00BF603E /* Build configuration list for PBXProject "VJFramework" */;
@@ -268,6 +285,7 @@
 			projectRoot = "";
 			targets = (
 				F68FAB8F1C9FF7CF00BF603E /* VJFramework */,
+				F6C346A01D01973C00CDB523 /* Universal Builder */,
 			);
 		};
 /* End PBXProject section */
@@ -283,6 +301,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F6C346A41D01974700CDB523 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Merge Script\n\n# 1\n# Set bash script to exit immediately if any commands fail.\nset -e\n\n# 2\n# Setup some constants for use later on.\nFRAMEWORK_NAME=\"VJFramework\"\n\n# 3\n# If remnants from a previous build exist, delete them.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi\n\n# 4\n# Build the framework for device and for simulator (using\n# all needed architectures).\nxcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -sdk \"iphoneos\"\nxcodebuild -target \"${FRAMEWORK_NAME}\" -configuration Release -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -sdk \"iphonesimulator\"\n\n# 5\n# Remove .framework file if exists on Desktop from previous run.\nif [ -d \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework\" ]; then\nrm -rf \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework\"\nfi\n\n# 6\n# Copy the device version of framework to Desktop.\ncp -r \"${SRCROOT}/build/Release-iphoneos/${FRAMEWORK_NAME}.framework\" \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework\"\n\n# 7\n# Replace the framework executable within the framework with\n# a new version created by merging the device and simulator\n# frameworks' executables with lipo.\nlipo -create -output \"${HOME}/Desktop/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Release-iphoneos/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/Release-iphonesimulator/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\"\n\n# 9\n# Delete the most recent build.\nif [ -d \"${SRCROOT}/build\" ]; then\nrm -rf \"${SRCROOT}/build\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F68FAB8B1C9FF7CF00BF603E /* Sources */ = {
@@ -421,11 +455,25 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = VJFramework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jalan.VJFramework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		F6C346A21D01973C00CDB523 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F6C346A31D01973C00CDB523 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -446,6 +494,15 @@
 			buildConfigurations = (
 				F68FAB991C9FF7CF00BF603E /* Debug */,
 				F68FAB9A1C9FF7CF00BF603E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6C346A11D01973C00CDB523 /* Build configuration list for PBXAggregateTarget "Universal Builder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6C346A21D01973C00CDB523 /* Debug */,
+				F6C346A31D01973C00CDB523 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
