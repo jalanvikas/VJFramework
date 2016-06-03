@@ -39,6 +39,8 @@
 
 - (NSString *)localizedString;
 
+- (NSString *)halfSecureString;
+
 - (CGSize)getSizeForWidth:(CGFloat)width withFont:(UIFont *)font numberOfLines:(NSInteger *)lines;
 
 @end

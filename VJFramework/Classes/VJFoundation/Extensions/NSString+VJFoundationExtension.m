@@ -42,6 +42,21 @@
     return NSLocalizedString(self, self);
 }
 
+- (NSString *)halfSecureString
+{
+    BOOL oneChar = YES;
+    NSString *encryptedString = [self copy];
+    NSRange replacingRange = NSMakeRange(2, (oneChar?1:2));
+    while ([self length] > (replacingRange.location + replacingRange.length))
+    {
+        encryptedString = [encryptedString stringByReplacingCharactersInRange:replacingRange withString:(oneChar?@"*":@"**")];
+        oneChar = !oneChar;
+        replacingRange = NSMakeRange(((replacingRange.location + replacingRange.length) + (oneChar?1:2)), (oneChar?1:2));
+    }
+    
+    return encryptedString;
+}
+
 - (CGSize)getSizeForWidth:(CGFloat)width withFont:(UIFont *)font numberOfLines:(NSInteger *)lines
 {
     NSDictionary *attributes = @{NSFontAttributeName:font};
