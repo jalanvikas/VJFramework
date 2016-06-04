@@ -37,6 +37,13 @@
 
 @implementation NSString (VJFoundationExtension)
 
+- (BOOL)isValidEmailAddress
+{
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}";
+    NSPredicate *emailPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailPredicate evaluateWithObject:self];
+}
+
 - (NSString *)localizedString
 {
     return NSLocalizedString(self, self);
@@ -45,13 +52,31 @@
 - (NSString *)halfSecureString
 {
     BOOL oneChar = YES;
+    BOOL isEmailID = [self isValidEmailAddress];
+    NSString *domain = @"";
     NSString *encryptedString = [self copy];
+    
+    if (isEmailID)
+    {
+        NSRange domainRange = [self rangeOfString:@"@"];
+        if (NSNotFound != domainRange.location)
+        {
+            domain = [self substringFromIndex:domainRange.location];
+            encryptedString = [self substringToIndex:domainRange.location];
+        }
+    }
+    
     NSRange replacingRange = NSMakeRange(2, (oneChar?1:2));
-    while ([self length] > (replacingRange.location + replacingRange.length))
+    while ([encryptedString length] > (replacingRange.location + replacingRange.length))
     {
         encryptedString = [encryptedString stringByReplacingCharactersInRange:replacingRange withString:(oneChar?@"*":@"**")];
         oneChar = !oneChar;
         replacingRange = NSMakeRange(((replacingRange.location + replacingRange.length) + (oneChar?1:2)), (oneChar?1:2));
+    }
+    
+    if ([domain length])
+    {
+        encryptedString = [encryptedString stringByAppendingString:domain];
     }
     
     return encryptedString;

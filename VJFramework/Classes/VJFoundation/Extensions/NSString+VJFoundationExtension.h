@@ -37,6 +37,8 @@
 
 @interface NSString (VJFoundationExtension)
 
+- (BOOL)isValidEmailAddress;
+
 - (NSString *)localizedString;
 
 - (NSString *)halfSecureString;
