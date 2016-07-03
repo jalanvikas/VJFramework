@@ -481,11 +481,14 @@
             if (nil == self.alertSelectionList)
                 self.alertViewCompletionHandler(YES, -1);
             else
-                self.alertViewCompletionHandler(((-1 == self.selectedIndex)?NO:YES), self.selectedIndex);
+                self.alertViewCompletionHandler(NO, -1);
         }
         else
         {
-            self.alertViewCompletionHandler(NO, ([(UIButton *)sender tag] - OTHER_BUTTON_START_TAG));
+            if (nil == self.alertSelectionList)
+                self.alertViewCompletionHandler(NO, ([(UIButton *)sender tag] - OTHER_BUTTON_START_TAG));
+            else
+                self.alertViewCompletionHandler(((-1 == self.selectedIndex)?NO:YES), self.selectedIndex);
         }
     }
 }

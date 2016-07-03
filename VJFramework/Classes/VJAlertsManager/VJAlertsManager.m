@@ -162,7 +162,7 @@
     }
 }
 
-- (void)showAlertWithTitle:(NSString *)title selectionList:(NSArray *)list buttonTitle:(NSString *)buttonTitle completion:(void (^)(BOOL selected, NSInteger selectedListIndex))completion
+- (void)showAlertWithTitle:(NSString *)title selectionList:(NSArray *)list buttonTitle:(NSString *)buttonTitle cancelButtonTitle:(NSString *)cancelButtonTitle completion:(void (^)(BOOL selected, NSInteger selectedListIndex))completion
 {
     NSMutableDictionary *alertInfo = [NSMutableDictionary dictionary];
     if (nil != title)
@@ -170,7 +170,9 @@
     if (nil != list)
         [alertInfo setObject:list forKey:ALERT_SELECTION_LIST_KEY];
     if (nil != buttonTitle)
-        [alertInfo setObject:buttonTitle forKey:ALERT_CANCEL_BUTTON_KEY];
+        [alertInfo setObject:[NSArray arrayWithObject:buttonTitle] forKey:ALERT_OTHER_BUTTONS_KEY];
+    if (nil != cancelButtonTitle)
+        [alertInfo setObject:cancelButtonTitle forKey:ALERT_CANCEL_BUTTON_KEY];
     if (nil != completion)
         [alertInfo setObject:completion forKey:ALERT_COMPLETION_BLOCK_KEY];
     
