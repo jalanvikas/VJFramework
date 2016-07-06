@@ -379,10 +379,20 @@
         for (NSString *cellTitle in self.alertSelectionList)
         {
             NSInteger numberOfLines = 1;
-            CGSize titleSize = [cellTitle getSizeForWidth:self.alertSelectionListTableView.frame.size.width
-                                                 withFont:ALERT_MESSAGE_LABEL_FONT
-                                            numberOfLines:&numberOfLines];
-            totalHeightForList += MAX(titleSize.height, SELECTION_LIST_TABLE_VIEW_CELL_HEIGHT);
+            if ([cellTitle isAttributedString])
+            {
+                NSAttributedString *attributedString = [self.alertMessage attributedString];
+                CGSize titleSize = [attributedString getSizeForWidth:self.alertSelectionListTableView.frame.size.width
+                                                numberOfLines:&numberOfLines];
+                totalHeightForList += MAX(titleSize.height, SELECTION_LIST_TABLE_VIEW_CELL_HEIGHT);
+            }
+            else
+            {
+                CGSize titleSize = [cellTitle getSizeForWidth:self.alertSelectionListTableView.frame.size.width
+                                                     withFont:ALERT_MESSAGE_LABEL_FONT
+                                                numberOfLines:&numberOfLines];
+                totalHeightForList += MAX(titleSize.height, SELECTION_LIST_TABLE_VIEW_CELL_HEIGHT);
+            }
         }
         self.alertSelectionListTableView.hidden = NO;
         
@@ -422,7 +432,7 @@
             [button setTag:(OTHER_BUTTON_START_TAG + index)];
             [self.buttonsHolderScrollView addSubview:button];
             addedButtons++;
-            buttonYAxis += (((2 == [self totalNumberOfButtons]) && (0 == addedButtons))?buttonFrame.size.height:0.0);
+            buttonYAxis += (((2 == [self totalNumberOfButtons]) && (1 == addedButtons))?0.0:buttonFrame.size.height);
             
             BOOL shouldAddButtonSeparator = NO;
             if ((((nil != self.cancelButton) && (0 < [self.cancelButton length])) || (index < ([self.otherButtons count] - 1))) &&
