@@ -46,6 +46,7 @@
 #define FAQ_ITEM_TITLE_KEY              @"title"
 #define FAQ_ITEM_IMAGE_KEY              @"image"
 #define FAQ_ITEM_USER_ACTION_KEY        @"userAction"
+#define FAQ_ITEM_ERROR_MSG_KEY          @"errorMessage"
 
 #define OFFSET                                          15.0
 #define OFFSET_BETWEEN_ITEMS                            10.0
@@ -53,6 +54,9 @@
 
 #define LIST_TABLE_VIEW_CELL_HEIGHT                     50.0f
 #define LIST_TABLE_VIEW_CELL_SEPARATOR_HEIGHT           0.5f
+
+#define OFFSET_WEBVIEW_ERROR                            15.0
+#define WEBVIEW_HEIGHT                                  70.0
 
 
 @class VJFAQListView;
@@ -260,6 +264,7 @@
 
 @property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
+@property (nonatomic, strong) UILabel *errorLabel;
 
 @property (nonatomic, strong) NSDictionary *faqInfo;
 
@@ -295,6 +300,16 @@
     self.activityIndicatorView.frame = activityIndicatorViewFrame;
     self.activityIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [self addSubview:self.activityIndicatorView];
+    
+    self.errorLabel = [[UILabel alloc] initWithFrame:CGRectMake(OFFSET_WEBVIEW_ERROR, OFFSET_WEBVIEW_ERROR, (self.frame.size.width - (OFFSET_WEBVIEW_ERROR * 2)), WEBVIEW_HEIGHT)];
+    [self.errorLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.errorLabel setNumberOfLines:2];
+    CGRect errorLabelFrame = self.errorLabel.frame;
+    errorLabelFrame.origin.y = ((self.bounds.size.height - errorLabelFrame.size.height) * 0.5);
+    self.errorLabel.frame = errorLabelFrame;
+    self.errorLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self addSubview:self.errorLabel];
+    [self.errorLabel setHidden:YES];
 }
 
 - (id)initWithFaqInfo:(NSDictionary *)faqInfo
@@ -317,12 +332,34 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
+    [self.errorLabel setHidden:YES];
     [self.activityIndicatorView startAnimating];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView;
 {
     [self.activityIndicatorView stopAnimating];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(nullable NSError *)error
+{
+    [self.activityIndicatorView stopAnimating];
+
+    CGRect errorLabelFrame = self.errorLabel.frame;
+    errorLabelFrame.size.width = (self.frame.size.width - (OFFSET_WEBVIEW_ERROR * 2));
+    errorLabelFrame.origin.x = OFFSET_WEBVIEW_ERROR;
+    errorLabelFrame.origin.y = ((self.bounds.size.height - errorLabelFrame.size.height) * 0.5);
+    self.errorLabel.frame = errorLabelFrame;
+    
+    [self.errorLabel setAlpha:0.0];
+    [self.errorLabel setHidden:NO];
+    [self.errorLabel setText:((nil != [self.faqInfo objectForKey:FAQ_ITEM_ERROR_MSG_KEY])?[self.faqInfo objectForKey:FAQ_ITEM_ERROR_MSG_KEY]:error.localizedDescription)];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.errorLabel setAlpha:1.0];
+    }completion:^(BOOL finished){
+        
+    }];
 }
 
 @end
