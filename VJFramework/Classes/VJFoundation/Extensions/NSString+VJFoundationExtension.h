@@ -45,6 +45,10 @@
 
 - (CGSize)getSizeForWidth:(CGFloat)width withFont:(UIFont *)font numberOfLines:(NSInteger *)lines;
 
+- (NSString *)digits;
+
+- (NSString *)alphabets;
+
 @end
 
 

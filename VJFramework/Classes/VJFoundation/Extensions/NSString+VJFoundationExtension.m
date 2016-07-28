@@ -37,6 +37,9 @@
 
 @implementation NSString (VJFoundationExtension)
 
+#define NUMBERS                     @"1234567890"
+#define ALPHABETS                   @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
 - (BOOL)isValidEmailAddress
 {
     NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}";
@@ -96,6 +99,22 @@
     *lines = noOfLines;
     
     return textRectForWidth.size;
+}
+
+- (NSString *)digits
+{
+    NSCharacterSet *charSet = [[NSCharacterSet characterSetWithCharactersInString:NUMBERS] invertedSet];
+    NSString *filtered = [[self componentsSeparatedByCharactersInSet:charSet] componentsJoinedByString:@""];
+    
+    return filtered;
+}
+
+- (NSString *)alphabets
+{
+    NSCharacterSet *charSet = [[NSCharacterSet characterSetWithCharactersInString:ALPHABETS] invertedSet];
+    NSString *filtered = [[self componentsSeparatedByCharactersInSet:charSet] componentsJoinedByString:@""];
+    
+    return filtered;
 }
 
 @end
