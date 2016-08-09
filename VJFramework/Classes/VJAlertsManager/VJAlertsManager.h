@@ -61,6 +61,8 @@
 
 - (void)setSelectionListTintColor:(UIColor *)tintColor;                 // Default White Color.
 
+- (void)disableListButtonWhenNotSelected:(BOOL)disable;                 // Default NO.
+
 #pragma mark - Custom Method
 
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles completion:(void (^)(BOOL isCancelButton, NSInteger buttonIndex))completion;

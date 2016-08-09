@@ -77,6 +77,7 @@
 @property (nonatomic, strong) NSString *alertTitle;
 @property (nonatomic, strong) NSString *alertMessage;
 @property (nonatomic, strong) NSArray *alertSelectionList;
+@property (nonatomic, assign) BOOL disableListButton;
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (nonatomic, strong) NSString *cancelButton;
 @property (nonatomic, strong) NSArray *otherButtons;
@@ -121,7 +122,7 @@
 
 #pragma mark - Designated Initializer Methods
 
-- (id)initWithTitle:(NSString *)title message:(NSString *)message selectionList:(NSArray *)list listTintColor:(UIColor *)listTintColor cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles backgroundColor:(UIColor *)backgroundColor backgroundImage:(UIImage *)backgroundImage contentBackgroundColor:(UIColor *)contentBackgroundColor contentAlignment:(NSTextAlignment)contentAlignment headerAlignment:(NSTextAlignment)headerAlignment buttonsColor:(UIColor *)buttonsColor completion:(void (^)(BOOL isCancelButton, NSInteger buttonIndex))completion
+- (id)initWithTitle:(NSString *)title message:(NSString *)message selectionList:(NSArray *)list disableListButton:(BOOL)disable listTintColor:(UIColor *)listTintColor cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles backgroundColor:(UIColor *)backgroundColor backgroundImage:(UIImage *)backgroundImage contentBackgroundColor:(UIColor *)contentBackgroundColor contentAlignment:(NSTextAlignment)contentAlignment headerAlignment:(NSTextAlignment)headerAlignment buttonsColor:(UIColor *)buttonsColor completion:(void (^)(BOOL isCancelButton, NSInteger buttonIndex))completion
 {
     self = [super initWithNibName:NSStringFromClass([VJAlertViewController class]) bundle:[NSBundle bundleWithIdentifier:VJFRAMEWORK_IDENTIFIER]];
     if (self)
@@ -129,6 +130,7 @@
         self.alertTitle = title;
         self.alertMessage = message;
         self.alertSelectionList = list;
+        self.disableListButton = disable;
         self.alertListTintColor = listTintColor;
         self.selectedIndex = -1;
         self.cancelButton = cancelButtonTitle;
@@ -428,6 +430,11 @@
                 }
             }
             button.frame = buttonFrame;
+            if ((nil != self.alertSelectionList) && (self.disableListButton))
+            {
+                [button setEnabled:NO];
+                [button setAlpha:0.8];
+            }
             
             [button setTag:(OTHER_BUTTON_START_TAG + index)];
             [self.buttonsHolderScrollView addSubview:button];
@@ -531,6 +538,17 @@
         self.selectedIndex = -1;
     else
         self.selectedIndex = indexPath.row;
+    
+    if (self.disableListButton)
+    {
+        UIButton *button = (UIButton *)[self.buttonsHolderScrollView viewWithTag:OTHER_BUTTON_START_TAG];
+        if (button)
+        {
+            [button setEnabled:((-1 == self.selectedIndex)?NO:YES)];
+            [button setAlpha:((-1 == self.selectedIndex)?0.8:1.0)];
+        }
+    }
+    
     [self.alertSelectionListTableView reloadData];
 }
 

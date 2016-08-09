@@ -58,6 +58,7 @@
 @property (nonatomic, assign) NSTextAlignment alertHeaderAlignment;
 @property (nonatomic, strong) UIColor *alertButtonsColor;
 @property (nonatomic, strong) UIColor *alertListTintColor;
+@property (nonatomic, assign) BOOL disableListButton;
 
 @property (nonatomic, strong) VJAlertViewController *alertViewController;
 
@@ -78,6 +79,7 @@
     {
         self.queuedAlerts = [NSMutableArray array];
         self.isAlertShown = NO;
+        self.disableListButton = NO;
     }
     
     return self;
@@ -134,6 +136,11 @@
 - (void)setSelectionListTintColor:(UIColor *)tintColor
 {
     self.alertListTintColor = tintColor;
+}
+
+- (void)disableListButtonWhenNotSelected:(BOOL)disable
+{
+    self.disableListButton = disable;
 }
 
 #pragma mark - Custom Method
@@ -193,7 +200,7 @@
     self.isAlertShown = YES;
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     
-    self.alertViewController = [[VJAlertViewController alloc] initWithTitle:[alertInfo objectForKey:ALERT_TITLE_KEY] message:[alertInfo objectForKey:ALERT_MESSAGE_KEY] selectionList:[alertInfo objectForKey:ALERT_SELECTION_LIST_KEY] listTintColor:self.alertListTintColor cancelButtonTitle:[alertInfo objectForKey:ALERT_CANCEL_BUTTON_KEY] otherButtonTitles:[alertInfo objectForKey:ALERT_OTHER_BUTTONS_KEY] backgroundColor:self.alertBackgroundColor backgroundImage:self.alertBackgroundImage contentBackgroundColor:self.alertContentBackgroundColor contentAlignment:self.alertContentAlignment headerAlignment:self.alertHeaderAlignment buttonsColor:self.alertButtonsColor completion:^(BOOL isCancelButton, NSInteger buttonIndex){
+    self.alertViewController = [[VJAlertViewController alloc] initWithTitle:[alertInfo objectForKey:ALERT_TITLE_KEY] message:[alertInfo objectForKey:ALERT_MESSAGE_KEY] selectionList:[alertInfo objectForKey:ALERT_SELECTION_LIST_KEY] disableListButton:self.disableListButton listTintColor:self.alertListTintColor cancelButtonTitle:[alertInfo objectForKey:ALERT_CANCEL_BUTTON_KEY] otherButtonTitles:[alertInfo objectForKey:ALERT_OTHER_BUTTONS_KEY] backgroundColor:self.alertBackgroundColor backgroundImage:self.alertBackgroundImage contentBackgroundColor:self.alertContentBackgroundColor contentAlignment:self.alertContentAlignment headerAlignment:self.alertHeaderAlignment buttonsColor:self.alertButtonsColor completion:^(BOOL isCancelButton, NSInteger buttonIndex){
         
         void (^completionHandler)(BOOL isCancelButton, NSInteger buttonIndex) = [alertInfo objectForKey:ALERT_COMPLETION_BLOCK_KEY];
         completionHandler(isCancelButton, buttonIndex);
